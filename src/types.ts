@@ -1,0 +1,89 @@
+import { Socket } from 'socket.io-client';
+
+export type UserRegistrationType = {
+    username: string;
+    email: string;
+    password: string;
+    confirmPassword: string;
+};
+
+export type UserLoginType = {
+    email: string;
+    password: string;
+};
+
+export type UserInputType = {
+    name: 'email' | 'password' | 'confirmPassword' | 'username';
+    label: string;
+};
+
+// after authentication
+
+export type UserAuthType = {
+    _id: string;
+    username: string;
+    email: string;
+    acceptTerms: boolean;
+    role: string;
+    verified: boolean;
+};
+
+export type UserType = {
+    _id: string;
+    username: string;
+    email: string;
+    // image?: string;
+    acceptTerms: boolean;
+    role: string;
+    verified: boolean;
+};
+
+export type UserStoreType = {
+    authUser: UserAuthType | null;
+    checkAuth: () => Promise<void>;
+    setAuthUser: (data: UserAuthType) => void;
+    socket: Socket<ServerToClientProps, ClientToServerProps>;
+    connectSocket: () => void;
+    disconnectSocket: () => void;
+};
+
+// socket
+export type ServerToClientProps = {
+    message: (data: string) => void;
+    'new-message': (data: MessageType) => void;
+};
+export type ClientToServerProps = {
+    seen: (data: string) => void;
+};
+
+// message types
+
+export type MessageStoreType = {
+    messages: MessageType[];
+    setMessages: (newMessages: MessageType[]) => void;
+    addNewMessage: (newMessage: MessageType) => void;
+    // addMessage: (newMessage: MessageType) => void;
+    // users
+    gettingUsers: boolean;
+    users: UserType[];
+    getUsers: () => void;
+    getUser: (username: string) => UserType | undefined;
+    getSelectedUser: (id: string) => UserType | undefined;
+};
+
+export type MessageType = {
+    _id: string;
+    senderId: string;
+    receiverId: string;
+    text?: string;
+    image?: string;
+    createdAt?: string;
+    updatedAt?: string;
+};
+
+export type TestUser = {
+    username: string;
+    latestMessage: string;
+    time: string;
+    image: string;
+};
