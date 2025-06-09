@@ -1,6 +1,7 @@
 'use client';
 
 import GradientCover from '@/components/covers/GradientCover';
+import ChatLoader from '@/components/loaders/ChatLoader';
 import { useMessageStore } from '@/store/messageStore';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -13,9 +14,10 @@ const Chats = () => {
             {/* <div className='cover w-full h-full absolute bg-gradient-to-b from-black/0 to-black/50 pointer-events-none'></div> */}
             <GradientCover />
             {gettingUsers ? (
-                <div className='w-full h-full flex justify-center items-center'>
-                    <p className='text-sm'>Loading...</p>
-                </div>
+                // <div className='w-full h-full flex justify-center items-center'>
+                //     <p className='text-sm'>Loading...</p>
+                // </div>
+                <ChatLoader />
             ) : (
                 <div className='users h-full flex gap-5 flex-col overflow-y-scroll pr-3'>
                     {users.map((user) => (

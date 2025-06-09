@@ -8,6 +8,9 @@ import Input from '@/components/form/Input';
 import { authApi } from '@/lib/api';
 import { useRouter } from 'next/navigation';
 import { useUserStore } from '@/store/userStore';
+import { errorMessage } from '@/lib/utils';
+import toast from 'react-hot-toast';
+import AuthLoader from '@/components/loaders/AuthLoader';
 
 const userInputs: UserInputType[] = [
     {
@@ -24,7 +27,7 @@ const LoginForm = () => {
     const router = useRouter();
     const form = useForm<UserRegistrationType>({ mode: 'onTouched' });
     const { register, formState, handleSubmit, watch } = form;
-    const { errors } = formState;
+    const { errors, isSubmitting } = formState;
     const { setAuthUser, connectSocket } = useUserStore();
 
     const onSubmit = async (formValues: UserRegistrationType) => {
@@ -40,14 +43,22 @@ const LoginForm = () => {
             // make socket connection
             connectSocket();
 
+            // show success message to the user
+            toast.success('Login successful!');
+
             // send user to the homepage
             router.push('/');
-        } catch (error) {
-            console.log({ error });
+        } catch (error: unknown) {
+            // handle error here
+            const message = errorMessage(error);
+
+            // show error message to the user
+            toast.error(message);
         }
     };
     return (
         <div className='w-full flex justify-center'>
+            {isSubmitting && <AuthLoader />}
             <form
                 onSubmit={handleSubmit(onSubmit)}
                 className='flex gap-4 flex-col items-center'

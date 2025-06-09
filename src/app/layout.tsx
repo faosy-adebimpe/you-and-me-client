@@ -1,10 +1,14 @@
 import React from 'react';
 import './globals.css';
+import { Toaster } from 'react-hot-toast';
 
 const RootLayout = ({ children }: Readonly<{ children: React.ReactNode }>) => {
     return (
         <html lang='en'>
-            <body>{children}</body>
+            <body>
+                <Toaster />
+                {children}
+            </body>
         </html>
     );
 };

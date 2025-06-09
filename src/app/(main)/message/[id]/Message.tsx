@@ -1,4 +1,5 @@
 'use client';
+import ChatLoader from '@/components/loaders/ChatLoader';
 import { messageApi } from '@/lib/api';
 import { useMessageStore } from '@/store/messageStore';
 import { useUserStore } from '@/store/userStore';
@@ -65,9 +66,10 @@ const Message = ({ user }: { user: UserType }) => {
 
     if (loading) {
         return (
-            <div className='w-full h-full flex justify-center items-center'>
-                <p className='text-sm'>Loading messages...</p>
-            </div>
+            // <div className='w-full h-full flex justify-center items-center'>
+            //     <p className='text-sm'>Loading messages...</p>
+            // </div>
+            <ChatLoader />
         );
     }
     if (messages.length === 0) {
