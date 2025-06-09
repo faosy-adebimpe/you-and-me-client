@@ -5,9 +5,6 @@ const nextConfig: NextConfig = {
     // experimental: { optimizeCss: false },
 
     async rewrites() {
-        if (process.env.NODE_ENV === 'production') {
-            return [];
-        }
         return [
             {
                 source: '/api/:path*', // A more general rule for other API calls
