@@ -39,3 +39,10 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+
+# .gitignore
+/public/sw.js
+/public/workbox-*.js
+/public/sw.ts
+/public/workbox-*.ts

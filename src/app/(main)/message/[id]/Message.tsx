@@ -17,7 +17,7 @@ const Message = ({ user }: { user: UserType }) => {
     const { messages, setMessages, addNewMessage } = useMessageStore();
 
     const [loading, setLoading] = useState(false);
-    const [initialScroll, setInitialScroll] = useState(1);
+    const [initialScroll, setInitialScroll] = useState(0);
 
     const getMessagesFunction = async () => {
         setLoading(true);
@@ -25,7 +25,8 @@ const Message = ({ user }: { user: UserType }) => {
             const response = await messageApi.get(`/${user._id}`);
             const { data } = response;
             setMessages(data);
-            setInitialScroll(3);
+            // setInitialScroll(3);
+            setInitialScroll((prev) => prev + 1);
         } catch (error) {
             console.log({ error });
         } finally {
@@ -33,14 +34,17 @@ const Message = ({ user }: { user: UserType }) => {
         }
     };
 
-    const getMessages = useCallback(getMessagesFunction, []);
+    const getMessages = useCallback(getMessagesFunction, [
+        setMessages,
+        user._id,
+    ]);
 
     useEffect(() => {
         // auto scroll
         const messageContainer = messageContainerRef.current;
         messageContainer?.scrollTo({
             top: messageContainer.scrollHeight,
-            behavior: initialScroll === 3 ? 'smooth' : 'instant',
+            behavior: initialScroll === 2 ? 'smooth' : 'instant',
         });
     }, [messages, initialScroll]);
 
@@ -84,7 +88,7 @@ const Message = ({ user }: { user: UserType }) => {
     return (
         <div className='container h-full'>
             <div
-                className='flex gap-[31px] flex-col h-full overflow-y-scroll pr-3'
+                className='flex gap-[31px] flex-col h-full overflow-y-scroll pr-3 w-full overflow-x-hidden'
                 ref={messageContainerRef}
             >
                 {messages.map((message) => (
@@ -105,12 +109,13 @@ const Message = ({ user }: { user: UserType }) => {
                             />
                         )}
                         <div
+                            // bg-gradient-to-tl from-[#2B2B2B] to-[#454545]
                             className={classNames(
-                                'bg-gradient-to-tl from-[#2B2B2B] to-[#454545] p-3',
+                                'bg-gradient-to-tl from-[#2B2B2B] p-3',
                                 {
-                                    'rounded-[20px_20px_0px_20px]':
+                                    'to-(--theme-color) rounded-[20px_20px_0px_20px]':
                                         message.senderId === authUser?._id,
-                                    'rounded-[20px_20px_20px_0]':
+                                    'to-[#454545] rounded-[20px_20px_20px_0]':
                                         message.senderId !== authUser?._id,
                                 }
                             )}

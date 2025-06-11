@@ -1,17 +1,50 @@
-import type { NextConfig } from 'next';
+// next.config.js
+import withPWA from 'next-pwa';
 
-const nextConfig: NextConfig = {
-    /* config options here */
-    // experimental: { optimizeCss: false },
+const nextConfig = withPWA({
+    dest: 'public',
+    // other options
+});
 
+export default {
+    ...nextConfig,
     async rewrites() {
         return [
             {
-                source: '/api/:path*', // A more general rule for other API calls
+                source: '/api/:path*',
                 destination: `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/api/:path*`,
             },
         ];
     },
 };
 
-export default nextConfig;
+// // next.config.ts
+// import nextPWA from 'next-pwa';
+
+// const withPWA = nextPWA({
+//     dest: 'public',
+//     register: true,
+//     skipWaiting: true,
+//     // disable: process.env.NODE_ENV === 'development',
+//     disable: false, // Enable PWA in development for testing
+//     fallbacks: {
+//         document: '/offline.html',
+//         image: '',
+//         audio: '',
+//         video: '',
+//         font: '',
+//     },
+// });
+
+// const config = {
+//     async rewrites() {
+//         return [
+//             {
+//                 source: '/api/:path*',
+//                 destination: `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/api/:path*`,
+//             },
+//         ];
+//     },
+// };
+
+// export default withPWA(config);

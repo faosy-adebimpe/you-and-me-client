@@ -9,7 +9,8 @@ const MessageFooter = ({ user }: { user: UserType }) => {
     const [message, setMessage] = useState('');
     const [sending, setSending] = useState(false);
 
-    const sendMessage = async () => {
+    const sendMessage = async (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
         if (!message) {
             return;
         }
@@ -31,7 +32,7 @@ const MessageFooter = ({ user }: { user: UserType }) => {
     };
     return (
         <div className='container'>
-            <div className='relative flex items-center'>
+            <form className='relative flex items-center' onSubmit={sendMessage}>
                 <input
                     className='w-full h-[56px] bg-[#2B2B2B] rounded-full border-none outline-none px-5 pr-28'
                     type='text'
@@ -42,18 +43,23 @@ const MessageFooter = ({ user }: { user: UserType }) => {
                 />
 
                 <div className='flex gap-3 items-center absolute right-3'>
-                    <button className='size-9 rounded-full bg-[#007EF4] flex justify-center items-center'>
+                    {/* [#007EF4] */}
+                    <button
+                        className='size-9 rounded-full bg-(--theme-color) flex justify-center items-center disabled:bg-(--background-color)'
+                        disabled={sending || true}
+                        type='button'
+                    >
                         <CameraIcon className='size-5' />
                     </button>
                     <button
-                        className='size-9 rounded-full bg-[#007EF4] flex justify-center items-center'
-                        onClick={sendMessage}
-                        disabled={sending}
+                        className='size-9 rounded-full bg-(--theme-color) flex justify-center items-center disabled:bg-(--background-color)'
+                        disabled={sending || !message}
+                        type='submit'
                     >
                         <PaperAirplaneIcon className='size-5' />
                     </button>
                 </div>
-            </div>
+            </form>
         </div>
     );
 };

@@ -1,5 +1,10 @@
 @import 'tailwindcss';
 
+@theme {
+    --theme-color: #4169e1; /* Royal Blue */
+    --background-color: #1c1b1b;
+}
+
 @layer base {
     button {
         @apply cursor-pointer transition-all;
