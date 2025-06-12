@@ -18,6 +18,14 @@ const RegisterPage = () => {
                             LOG IN
                         </Link>
                     </div>
+                    <div className='text-[12.8px] text-center -mt-5'>
+                        <Link
+                            href='/auth/forgot-password'
+                            className='underline underline-offset-2'
+                        >
+                            Forgot your password? Reset it here.
+                        </Link>
+                    </div>
                 </div>
             </main>
         </div>

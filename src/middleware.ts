@@ -1,6 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-const publicRoutes = ['/auth/register', '/auth/login'];
+const publicRoutes = [
+    '/auth/register',
+    '/auth/login',
+    '/auth/forgot-password',
+    '/auth/reset-password',
+    // '/auth/verify-email',
+    // '/auth/terms',
+    // '/auth/reset-password',
+];
 // const privateRoutes = [];
 // const hybridRoutes = [];
 
