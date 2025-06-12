@@ -1,13 +1,13 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { authApi } from '@/lib/api';
 import { errorMessage } from '@/lib/utils';
 import toast from 'react-hot-toast';
 import Link from 'next/link';
 
-const ResetPasswordPage = () => {
+const ResetPasswordPageContent = () => {
     const searchParams = useSearchParams();
     const router = useRouter();
     const email = searchParams.get('email') || '';
@@ -121,5 +121,11 @@ const ResetPasswordPage = () => {
         </div>
     );
 };
+
+const ResetPasswordPage = () => (
+    <Suspense fallback={<div>Loading...</div>}>
+        <ResetPasswordPageContent />
+    </Suspense>
+);
 
 export default ResetPasswordPage;
