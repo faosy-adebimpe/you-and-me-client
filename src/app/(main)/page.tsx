@@ -1,11 +1,13 @@
 'use client';
 
-import { messageApi } from '@/lib/api';
+import { authApi, messageApi } from '@/lib/api';
+import { errorMessage } from '@/lib/utils';
 import { useUserStore } from '@/store/userStore';
 import axios from 'axios';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import toast from 'react-hot-toast';
 
 const HomePage = () => {
     const { authUser, disconnectSocket } = useUserStore();
@@ -40,6 +42,18 @@ const HomePage = () => {
             console.log({ error });
         }
     };
+
+    const requestVerificationEmail = async () => {
+        try {
+            const response = await authApi.post('/request-verification-email');
+            const { message } = response.data;
+            toast.success(message || 'Verification email sent successfully!');
+        } catch (error) {
+            const message = errorMessage(error);
+            toast.error(message || 'Failed to request verification email.');
+        }
+    };
+
     return (
         <main>
             <div className='container'>
@@ -57,6 +71,13 @@ const HomePage = () => {
                 >
                     Chats
                 </Link>
+
+                <button
+                    className='block mt-5'
+                    onClick={requestVerificationEmail}
+                >
+                    Request verification email
+                </button>
             </div>
         </main>
     );

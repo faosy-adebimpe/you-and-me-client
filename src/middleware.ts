@@ -5,22 +5,33 @@ const publicRoutes = [
     '/auth/login',
     '/auth/forgot-password',
     '/auth/reset-password',
-    // '/auth/verify-email',
-    // '/auth/terms',
-    // '/auth/reset-password',
 ];
-// const privateRoutes = [];
-// const hybridRoutes = [];
+
+const hybridRoutes = [
+    // Routes accessible to both authenticated and unauthenticated users
+    '/auth/verify-email',
+];
+
+const isMatch = (routes: string[], pathname: string) =>
+    routes.some((route) => pathname.startsWith(route));
 
 export const middleware = (request: NextRequest) => {
     const pathname = request.nextUrl.pathname;
     const authToken = request.cookies.get('auth-token')?.value;
 
-    if (!authToken && !publicRoutes.includes(pathname)) {
+    if (
+        !authToken &&
+        !isMatch(publicRoutes, pathname) &&
+        !isMatch(hybridRoutes, pathname)
+    ) {
         return NextResponse.redirect(new URL('/auth/login', request.url));
     }
 
-    if (authToken && publicRoutes.includes(pathname)) {
+    if (
+        authToken &&
+        isMatch(publicRoutes, pathname) &&
+        !isMatch(hybridRoutes, pathname)
+    ) {
         return NextResponse.redirect(new URL('/', request.url));
     }
 
