@@ -1,20 +1,28 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { authApi } from '@/lib/api';
 import toast from 'react-hot-toast';
 import { errorMessage } from '@/lib/utils';
 
-const VerifyEmail = () => {
+function TokenFetcher({
+    children,
+}: {
+    children: (token: string) => React.ReactNode;
+}) {
     const searchParams = useSearchParams();
-    const router = useRouter();
     const token = searchParams.get('token') || '';
+    return <>{children(token)}</>;
+}
+
+const VerifyEmail = () => {
+    const router = useRouter();
     const [loading, setLoading] = useState(false);
     const [verified, setVerified] = useState(false);
     const [error, setError] = useState('');
 
-    const handleVerify = async () => {
+    const handleVerify = async (token: string) => {
         setLoading(true);
         setError('');
         try {
@@ -25,8 +33,7 @@ const VerifyEmail = () => {
             toast.success(message || 'Email verified! You can now log in.');
 
             router.push('/auth/login');
-        } catch (err: unknown) {
-            // setError(err?.response?.data?.message || 'Verification failed.');
+        } catch (error: unknown) {
             const message = errorMessage(error);
             setError(message || 'Verification failed. Please try again.');
         } finally {
@@ -64,27 +71,37 @@ const VerifyEmail = () => {
                 {error && (
                     <div className='text-red-500 text-sm mb-4'>{error}</div>
                 )}
-                {verified ? (
-                    <button
-                        className='w-full py-2 px-4 bg-green-500 text-white font-semibold rounded-lg transition cursor-not-allowed'
-                        disabled
-                    >
-                        Verified!
-                    </button>
-                ) : (
-                    <button
-                        className='w-full py-2 px-4 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-700 transition'
-                        onClick={handleVerify}
-                        disabled={loading || !token}
-                    >
-                        {loading ? 'Verifying...' : 'Verify Email'}
-                    </button>
-                )}
+                <Suspense
+                    fallback={
+                        <div className='w-full py-2 px-4 bg-gray-300 rounded-lg text-center'>
+                            Loading...
+                        </div>
+                    }
+                >
+                    <TokenFetcher>
+                        {(token) =>
+                            verified ? (
+                                <button
+                                    className='w-full py-2 px-4 bg-green-500 text-white font-semibold rounded-lg transition cursor-not-allowed'
+                                    disabled
+                                >
+                                    Verified!
+                                </button>
+                            ) : (
+                                <button
+                                    className='w-full py-2 px-4 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-700 transition'
+                                    onClick={() => handleVerify(token)}
+                                    disabled={loading || !token}
+                                >
+                                    {loading ? 'Verifying...' : 'Verify Email'}
+                                </button>
+                            )
+                        }
+                    </TokenFetcher>
+                </Suspense>
             </div>
         </div>
     );
 };
 
 export default VerifyEmail;
-
-// w-full py-2 px-4 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-700 transition

@@ -4,27 +4,26 @@ import { Toaster } from 'react-hot-toast';
 import { Metadata } from 'next';
 import InstallButton from '@/components/buttons/InstallButton';
 
+import type { Viewport } from 'next';
+
+export const viewport: Viewport = {
+    themeColor: '#4169E1',
+};
+
 export const metadata: Metadata = {
     title: 'You & Me',
     description: 'You & Me chat application',
-    // manifest: '/manifest.webmanifest',
-    // optional, for completeness:
-    // manifest: '/manifest.json',
-    // themeColor: '#1f1f1f',
-    // icons: {
-    //     icon: '/pwa-icons/icon512_maskable.png',
-    //     shortcut: '/pwa-icons/icon512_maskable.png',
-    //     apple: '/pwa-icons/icon512_maskable.png',
-    // },
+    manifest: '/manifest.json',
+    themeColor: '#4169E1',
 };
 
 const RootLayout = ({ children }: Readonly<{ children: React.ReactNode }>) => {
     return (
         <html lang='en'>
             <head>
-                <link rel='manifest' href='/manifest.json' />
-                <link rel='icon' href='/icons/icon-192x192.png' />
-                <meta name='theme-color' content='#8936FF' />
+                {/* <link rel='manifest' href='/manifest.json' />
+                <meta name='theme-color' content='#ed0085' /> */}
+                <link rel='apple-touch-icon' href='/icons/icon-192x192.png' />
             </head>
             <body>
                 <Toaster />

@@ -1,13 +1,17 @@
-// next.config.js
-import withPWA from 'next-pwa';
+import withPWAInit from '@ducanh2912/next-pwa';
 
-const nextConfig = withPWA({
+const withPWA = withPWAInit({
     dest: 'public',
-    // other options
+    // disable: process.env.NODE_ENV === "development",
+    // register: true,
+    // scope: "/app",
+    // sw: "service-worker.js",
+    //...
 });
 
-export default {
-    ...nextConfig,
+// Your Next config is automatically typed!
+export default withPWA({
+    // Your Next.js config
     async rewrites() {
         return [
             {
@@ -16,27 +20,19 @@ export default {
             },
         ];
     },
-};
+});
 
 // // next.config.ts
-// import nextPWA from 'next-pwa';
+// import withPWA from 'next-pwa';
+// import type { NextConfig } from 'next';
 
-// const withPWA = nextPWA({
-//     dest: 'public',
-//     register: true,
-//     skipWaiting: true,
-//     // disable: process.env.NODE_ENV === 'development',
-//     disable: false, // Enable PWA in development for testing
-//     fallbacks: {
-//         document: '/offline.html',
-//         image: '',
-//         audio: '',
-//         video: '',
-//         font: '',
+// const isDev = process.env.NODE_ENV === 'development';
+
+// const baseConfig: NextConfig = {
+//     reactStrictMode: true,
+//     experimental: {
+//         serverActions: {},
 //     },
-// });
-
-// const config = {
 //     async rewrites() {
 //         return [
 //             {
@@ -47,4 +43,15 @@ export default {
 //     },
 // };
 
-// export default withPWA(config);
+// // ❗ Important: ensure this returns a plain object, not an array
+// const nextConfig = withPWA({
+//     ...baseConfig,
+//     pwa: {
+//         dest: 'public',
+//         disable: isDev,
+//         register: true,
+//         skipWaiting: true,
+//     },
+// });
+
+// export default nextConfig;
