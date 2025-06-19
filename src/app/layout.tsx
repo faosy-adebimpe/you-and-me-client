@@ -14,15 +14,12 @@ export const metadata: Metadata = {
     title: 'You & Me',
     description: 'You & Me chat application',
     manifest: '/manifest.json',
-    themeColor: '#4169E1',
 };
 
 const RootLayout = ({ children }: Readonly<{ children: React.ReactNode }>) => {
     return (
         <html lang='en'>
             <head>
-                {/* <link rel='manifest' href='/manifest.json' />
-                <meta name='theme-color' content='#ed0085' /> */}
                 <link rel='apple-touch-icon' href='/icons/icon-192x192.png' />
             </head>
             <body>

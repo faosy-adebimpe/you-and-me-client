@@ -23,6 +23,11 @@ export type UserAuthType = {
     _id: string;
     username: string;
     email: string;
+    firstName?: string;
+    middleName?: string;
+    lastName?: string;
+    gender?: string;
+    image?: string;
     acceptTerms: boolean;
     role: string;
     verified: boolean;
@@ -32,7 +37,11 @@ export type UserType = {
     _id: string;
     username: string;
     email: string;
-    // image?: string;
+    firstName?: string;
+    middleName?: string;
+    lastName?: string;
+    gender?: string;
+    image?: string;
     acceptTerms: boolean;
     role: string;
     verified: boolean;
@@ -45,6 +54,8 @@ export type UserStoreType = {
     socket: Socket<ServerToClientProps, ClientToServerProps>;
     connectSocket: () => void;
     disconnectSocket: () => void;
+    uploadingProfilePicture: boolean;
+    uploadProfilePicture: (profilePicture: string) => Promise<void>;
 };
 
 // socket

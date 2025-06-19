@@ -41,6 +41,26 @@ export const useUserStore = create<UserStoreType>()(
                 }
                 socket.disconnect();
             },
+
+            uploadingProfilePicture: false,
+
+            uploadProfilePicture: async (profilePicture) => {
+                set({ uploadingProfilePicture: true });
+                try {
+                    const response = authApi.post('/upload-profile-picture', {
+                        profilePicture, // base64 string
+                    });
+                    const { data } = await response;
+                    console.log({ data });
+                    // todo:get message and toast it
+                    const { user } = data;
+                    set({ authUser: user });
+                } catch (error) {
+                    console.log({ error });
+                } finally {
+                    set({ uploadingProfilePicture: false });
+                }
+            },
         }),
         { name: 'userStore' }
     )
