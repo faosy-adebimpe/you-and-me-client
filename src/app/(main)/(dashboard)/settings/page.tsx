@@ -1,6 +1,7 @@
 'use client';
 
 import MarkerIcon from '@/components/icons/MarkerIcon';
+import ChatLoader from '@/components/loaders/ChatLoader';
 import SilentLoader from '@/components/loaders/SilentLoader';
 import { useUserStore } from '@/store/userStore';
 import Image from 'next/image';
@@ -12,6 +13,8 @@ const SettingsPage = () => {
     const {
         authUser,
         uploadingProfilePicture,
+        requestingVerificationEmail,
+        requestVerificationEmail,
         uploadProfilePicture: upload,
         loggingOut,
         logout,
@@ -19,6 +22,7 @@ const SettingsPage = () => {
     const [selectedImage, setsSelectedImage] = useState<string | null>(null);
     const [changingPicture, setChangingPicture] = useState(false);
     const [mounted, setMounted] = useState(false);
+    const [interactedWith, setInteractedWith] = useState(false);
 
     useEffect(() => {
         setMounted(true);
@@ -37,6 +41,7 @@ const SettingsPage = () => {
                 const image = reader.result as string;
                 setsSelectedImage(image);
                 setChangingPicture(false);
+                setInteractedWith(true);
             };
             reader.readAsDataURL(file);
         }
@@ -46,11 +51,20 @@ const SettingsPage = () => {
         upload(selectedImage);
     };
 
+    // email request
+    const handleEmailRequest = () => {
+        requestVerificationEmail();
+    };
+
     // logout
     const handleLogout = () => {
         logout();
         router.push('/auth/login');
     };
+
+    if (!authUser) {
+        return <ChatLoader />;
+    }
     return (
         <div className='w-full h-full overflow-y-scroll'>
             <h1 className='text-2xl font-bold text-center p-4'>
@@ -123,7 +137,13 @@ const SettingsPage = () => {
                         </label>
                         <input
                             type='text'
-                            value='John Doe'
+                            value={
+                                authUser.firstName
+                                    ? authUser?.firstName +
+                                      ' ' +
+                                      authUser?.lastName
+                                    : ''
+                            }
                             disabled
                             className='w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-100 text-gray-700 cursor-not-allowed'
                             readOnly
@@ -135,7 +155,7 @@ const SettingsPage = () => {
                         </label>
                         <input
                             type='text'
-                            value='johndoe'
+                            value={authUser?.username}
                             disabled
                             className='w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-100 text-gray-700 cursor-not-allowed'
                             readOnly
@@ -147,7 +167,7 @@ const SettingsPage = () => {
                         </label>
                         <input
                             type='email'
-                            value='john.doe@example.com'
+                            value={authUser?.email}
                             disabled
                             className='w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-100 text-gray-700 cursor-not-allowed'
                             readOnly
@@ -156,21 +176,35 @@ const SettingsPage = () => {
                     <button
                         type='button'
                         className='w-full mt-4 py-2 px-4 bg-blue-600 text-white rounded-md font-semibold hover:bg-blue-700 transition'
-                        disabled={changingPicture}
+                        disabled={changingPicture || !interactedWith}
                         onClick={uploadProfilePicture}
                     >
                         {changingPicture
                             ? 'Changing picture...'
                             : 'Update profile'}
                     </button>
-                    <button
-                        type='button'
-                        className='w-full mt-4 py-2 px-4 bg-red-600 text-white rounded-md font-semibold hover:bg-red-700 transition'
-                        disabled={loggingOut}
-                        onClick={handleLogout}
-                    >
-                        {changingPicture ? 'Logging out...' : 'Logout'}
-                    </button>
+                    <div className='flex gap-6'>
+                        {!authUser?.verified && (
+                            <button
+                                type='button'
+                                className='w-full mt-4 py-2 px-4 bg-green-600 text-white rounded-md font-semibold hover:bg-green-700 transition'
+                                disabled={requestingVerificationEmail}
+                                onClick={handleEmailRequest}
+                            >
+                                {changingPicture
+                                    ? 'Requesting Email...'
+                                    : 'Make Request'}
+                            </button>
+                        )}
+                        <button
+                            type='button'
+                            className='w-full mt-4 py-2 px-4 bg-red-600 text-white rounded-md font-semibold hover:bg-red-700 transition'
+                            disabled={loggingOut}
+                            onClick={handleLogout}
+                        >
+                            {changingPicture ? 'Logging out...' : 'Logout'}
+                        </button>
+                    </div>
                 </div>
             </div>
             {/* Add your settings components here */}

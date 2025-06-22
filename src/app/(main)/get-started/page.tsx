@@ -20,7 +20,7 @@ const genders = [
     { label: 'Other', value: 'other' },
 ];
 
-const HomePage = () => {
+const GetStartedPage = () => {
     const router = useRouter();
     const { updateProfile, updatingProfile } = useUserStore();
     const [profilePic, setProfilePic] = useState<string | null>(null);
@@ -244,4 +244,4 @@ const HomePage = () => {
     );
 };
 
-export default HomePage;
+export default GetStartedPage;

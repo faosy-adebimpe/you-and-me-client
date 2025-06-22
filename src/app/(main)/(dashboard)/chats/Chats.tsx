@@ -28,7 +28,9 @@ const Chats = () => {
                         >
                             <div className='relative'>
                                 <Image
-                                    src={'/images/avatars/user.png'}
+                                    src={
+                                        user.image || '/images/avatars/user.png'
+                                    }
                                     className='opacity-50'
                                     title={user.username}
                                     alt={user.username}

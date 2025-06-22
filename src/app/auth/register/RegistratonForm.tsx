@@ -54,7 +54,7 @@ const RegistratonForm = () => {
             toast.success('Registration successful!');
 
             // send user to the homepage
-            router.push('/verify-email');
+            router.push('/get-started');
         } catch (error) {
             // handle error here
             const message = errorMessage(error);

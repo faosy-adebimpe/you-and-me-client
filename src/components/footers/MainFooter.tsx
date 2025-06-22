@@ -1,7 +1,7 @@
 'use client';
 
 import {
-    UserGroupIcon,
+    // UserGroupIcon,
     ChatBubbleOvalLeftIcon,
     Cog6ToothIcon,
 } from '@heroicons/react/24/outline';
@@ -11,7 +11,7 @@ import { usePathname } from 'next/navigation';
 
 const footerLinks = [
     { name: 'chats', href: '/chats', icon: ChatBubbleOvalLeftIcon },
-    { name: 'users', href: '/users', icon: UserGroupIcon },
+    // { name: 'users', href: '/users', icon: UserGroupIcon },
     { name: 'settings', href: '/settings', icon: Cog6ToothIcon },
 ];
 
@@ -37,11 +37,12 @@ const MainFooter = () => {
                                             pathname !== '/'),
                                 })}
                             />
-                            {link.name === 'chats' && (
+                            {/* uncomment */}
+                            {/* {link.name === 'chats' && (
                                 <div className='size-5 rounded-full text-white bg-red-500 flex justify-center items-center absolute top-1.5 right-0'>
                                     <span className='text-xs'>5</span>
                                 </div>
-                            )}
+                            )} */}
                         </Link>
                     ))}
                 </div>

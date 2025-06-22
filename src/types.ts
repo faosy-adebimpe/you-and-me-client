@@ -65,6 +65,11 @@ export type UserStoreType = {
     }) => void;
     uploadingProfilePicture: boolean;
     uploadProfilePicture: (profilePicture: string) => Promise<void>;
+
+    requestingVerificationEmail: boolean;
+    requestVerificationEmail: () => void;
+
+    // logout
     loggingOut: boolean;
     logout: () => void;
 };

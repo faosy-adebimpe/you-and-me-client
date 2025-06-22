@@ -32,7 +32,11 @@ export const middleware = (request: NextRequest) => {
         isMatch(publicRoutes, pathname) &&
         !isMatch(hybridRoutes, pathname)
     ) {
-        return NextResponse.redirect(new URL('/', request.url));
+        return NextResponse.redirect(new URL('/chats', request.url));
+    }
+
+    if (pathname === '/') {
+        return NextResponse.redirect(new URL('/chats', request.url));
     }
 
     return NextResponse.next();

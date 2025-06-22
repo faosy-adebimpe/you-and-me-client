@@ -17,12 +17,12 @@ const MessageNavbar = ({ user }: Readonly<{ user: UserType }>) => {
             </button>
             <div className='flex flex-col text-center'>
                 <p className='text-[#FFFFFF]'>{user?.username}</p>
-                <p className='text-xs text-[#CCCCCC]'>Available</p>
+                {/* <p className='text-xs text-[#CCCCCC]'>Available</p> */}
             </div>
             <button className='size-10 rounded-full flex justify-center items-center hover:bg-black/30'>
                 {/* <UserCircleIcon className='size-7' /> */}
                 <Image
-                    src={'/images/avatars/user.png'}
+                    src={user.image || '/images/avatars/user.png'}
                     title={user?.username}
                     alt={user?.username || "user's name"}
                     width={32}

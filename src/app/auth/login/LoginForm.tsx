@@ -47,7 +47,7 @@ const LoginForm = () => {
             toast.success('Login successful!');
 
             // send user to the homepage
-            router.push('/');
+            router.push('/chats');
         } catch (error: unknown) {
             // handle error here
             const message = errorMessage(error);

@@ -87,6 +87,25 @@ export const useUserStore = create<UserStoreType>()(
                 }
             },
 
+            // request-verification-email
+            requestingVerificationEmail: false,
+            requestVerificationEmail: async () => {
+                set({ requestingVerificationEmail: true });
+                try {
+                    const response = await authApi.post(
+                        '/request-verification-email'
+                    );
+                    const { message } = response.data;
+                    toast.success(message);
+                } catch (error: unknown) {
+                    // console.log({ error });
+                    const message = errorMessage(error);
+                    toast.error(message);
+                } finally {
+                    set({ requestingVerificationEmail: false });
+                }
+            },
+
             // logout
             loggingOut: false,
             logout: async () => {
