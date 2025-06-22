@@ -63,8 +63,8 @@ export const useUserStore = create<UserStoreType>()(
                 }
             },
 
+            // update profile picture
             uploadingProfilePicture: false,
-
             uploadProfilePicture: async (profilePicture) => {
                 set({ uploadingProfilePicture: true });
                 try {
@@ -72,14 +72,37 @@ export const useUserStore = create<UserStoreType>()(
                         profilePicture, // base64 string
                     });
                     const { data } = await response;
-                    console.log({ data });
+                    const { message } = data;
+                    toast.success(message);
+                    // console.log({ data });
                     // todo:get message and toast it
                     const { user } = data;
                     set({ authUser: user });
-                } catch (error) {
-                    console.log({ error });
+                } catch (error: unknown) {
+                    const message = errorMessage(error);
+                    toast.error(message);
+                    // console.log({ error });
                 } finally {
                     set({ uploadingProfilePicture: false });
+                }
+            },
+
+            // logout
+            loggingOut: false,
+            logout: async () => {
+                set({ loggingOut: true });
+                try {
+                    // remove _id from local storage
+                    if (localStorage.getItem('_id'))
+                        localStorage.removeItem('_id');
+                    const response = await authApi.post('/logout');
+                    const { message } = response.data;
+                    toast.success(message);
+                } catch (error: unknown) {
+                    const message = errorMessage(error);
+                    toast.error(message);
+                } finally {
+                    set({ loggingOut: false });
                 }
             },
         }),

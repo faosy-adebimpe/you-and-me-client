@@ -4,13 +4,17 @@ import MarkerIcon from '@/components/icons/MarkerIcon';
 import SilentLoader from '@/components/loaders/SilentLoader';
 import { useUserStore } from '@/store/userStore';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import React, { useState, useEffect } from 'react';
 
 const SettingsPage = () => {
+    const router = useRouter();
     const {
         authUser,
         uploadingProfilePicture,
         uploadProfilePicture: upload,
+        loggingOut,
+        logout,
     } = useUserStore();
     const [selectedImage, setsSelectedImage] = useState<string | null>(null);
     const [changingPicture, setChangingPicture] = useState(false);
@@ -40,6 +44,12 @@ const SettingsPage = () => {
     const uploadProfilePicture = () => {
         if (!selectedImage) return;
         upload(selectedImage);
+    };
+
+    // logout
+    const handleLogout = () => {
+        logout();
+        router.push('/auth/login');
     };
     return (
         <div className='w-full h-full overflow-y-scroll'>
@@ -152,6 +162,14 @@ const SettingsPage = () => {
                         {changingPicture
                             ? 'Changing picture...'
                             : 'Update profile'}
+                    </button>
+                    <button
+                        type='button'
+                        className='w-full mt-4 py-2 px-4 bg-red-600 text-white rounded-md font-semibold hover:bg-red-700 transition'
+                        disabled={loggingOut}
+                        onClick={handleLogout}
+                    >
+                        {changingPicture ? 'Logging out...' : 'Logout'}
                     </button>
                 </div>
             </div>

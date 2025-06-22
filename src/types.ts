@@ -65,6 +65,8 @@ export type UserStoreType = {
     }) => void;
     uploadingProfilePicture: boolean;
     uploadProfilePicture: (profilePicture: string) => Promise<void>;
+    loggingOut: boolean;
+    logout: () => void;
 };
 
 // socket
