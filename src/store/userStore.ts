@@ -4,6 +4,8 @@ import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 // import { io } from 'socket.io-client';
 import { getSocket } from '@/lib/socket';
+import { errorMessage } from '@/lib/utils';
+import toast from 'react-hot-toast';
 
 export const useUserStore = create<UserStoreType>()(
     devtools(
@@ -40,6 +42,25 @@ export const useUserStore = create<UserStoreType>()(
                     return;
                 }
                 socket.disconnect();
+            },
+
+            // updating profile
+            updatingProfile: false,
+            updateProfile: async (formData) => {
+                set({ updatingProfile: true });
+                try {
+                    const response = await authApi.post(
+                        '/update-profile',
+                        formData
+                    );
+                    const { message } = response.data;
+                    toast.success(message);
+                } catch (error: unknown) {
+                    const message = errorMessage(error);
+                    toast.error(message);
+                } finally {
+                    set({ updatingProfile: false });
+                }
             },
 
             uploadingProfilePicture: false,

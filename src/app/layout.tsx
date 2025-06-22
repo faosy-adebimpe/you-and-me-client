@@ -2,7 +2,6 @@ import React from 'react';
 import './globals.css';
 import { Toaster } from 'react-hot-toast';
 import { Metadata } from 'next';
-import InstallButton from '@/components/buttons/InstallButton';
 
 import type { Viewport } from 'next';
 
@@ -24,7 +23,6 @@ const RootLayout = ({ children }: Readonly<{ children: React.ReactNode }>) => {
             </head>
             <body>
                 <Toaster />
-                <InstallButton />
                 {children}
             </body>
         </html>

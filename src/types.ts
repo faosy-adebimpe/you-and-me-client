@@ -54,6 +54,15 @@ export type UserStoreType = {
     socket: Socket<ServerToClientProps, ClientToServerProps>;
     connectSocket: () => void;
     disconnectSocket: () => void;
+    updatingProfile: boolean;
+    updateProfile: (formData: {
+        firstName: string;
+        middleName?: string;
+        lastName: string;
+        image?: string;
+        gender: string;
+        dob: string;
+    }) => void;
     uploadingProfilePicture: boolean;
     uploadProfilePicture: (profilePicture: string) => Promise<void>;
 };

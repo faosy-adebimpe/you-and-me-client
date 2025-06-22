@@ -1,10 +1,10 @@
 'use client';
 
-import PenIconGenerateOriginally from '@/components/icons/PenIconGenerateOriginally';
+import MarkerIcon from '@/components/icons/MarkerIcon';
 import SilentLoader from '@/components/loaders/SilentLoader';
 import { useUserStore } from '@/store/userStore';
 import Image from 'next/image';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const SettingsPage = () => {
     const {
@@ -14,6 +14,12 @@ const SettingsPage = () => {
     } = useUserStore();
     const [selectedImage, setsSelectedImage] = useState<string | null>(null);
     const [changingPicture, setChangingPicture] = useState(false);
+    const [mounted, setMounted] = useState(false);
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
+
     const changeProfilePicture = (
         event: React.ChangeEvent<HTMLInputElement>
     ) => {
@@ -47,31 +53,40 @@ const SettingsPage = () => {
                             <SilentLoader />
                         </div>
                     )}
-                    <Image
-                        src={
-                            selectedImage ||
-                            authUser?.image ||
-                            '/default-avatar.png'
-                        }
-                        alt='Profile picture'
-                        className='w-24 h-24 rounded-full object-cover border-4 border-gray-200'
-                    />
-                    {/* <img
-                        src={
-                            selectedImage ||
-                            authUser?.image ||
-                            '/default-avatar.png'
-                        }
-                        alt='Profile Avatar'
-                        className='w-24 h-24 rounded-full object-cover border-4 border-gray-200'
-                    /> */}
+                    {mounted ? (
+                        <Image
+                            src={
+                                (selectedImage &&
+                                    typeof selectedImage === 'string' &&
+                                    selectedImage) ||
+                                (authUser?.image &&
+                                    typeof authUser.image === 'string' &&
+                                    authUser.image) ||
+                                '/default-avatar.png'
+                            }
+                            alt='Profile picture'
+                            width={96}
+                            height={96}
+                            className='w-24 h-24 rounded-full object-cover border-4 border-gray-200'
+                            unoptimized // Add this if you want to allow any remote image without domain config
+                        />
+                    ) : (
+                        <Image
+                            src={authUser?.image || '/default-avatar.png'}
+                            alt='Profile picture'
+                            width={96}
+                            height={96}
+                            className='w-24 h-24 rounded-full object-cover border-4 border-gray-200'
+                            unoptimized // Add this if you want to allow any remote image without domain config
+                        />
+                    )}
                     {!uploadingProfilePicture && (
                         <label
                             htmlFor='avatar-upload'
                             className='absolute bottom-0 right-0 bg-blue-600 text-white rounded-full p-2 cursor-pointer hover:bg-blue-700 transition flex justify-center items-center'
                         >
                             <span className='text-[12px]'>
-                                <PenIconGenerateOriginally />
+                                <MarkerIcon />
                             </span>
                             <input
                                 id='avatar-upload'
