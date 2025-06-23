@@ -88,7 +88,7 @@ const Message = ({ user }: { user: UserType }) => {
     return (
         <div className='h-full w-full overflow-x-hidden'>
             <div
-                className='flex gap-[31px] flex-col h-full overflow-y-scroll pr-2 w-full overflow-x-scroll'
+                className='flex gap-[31px] flex-col h-full overflow-y-scroll pr-2 w-full overflow-x-hidden'
                 ref={messageContainerRef}
             >
                 {messages.map((message) => (
@@ -126,7 +126,7 @@ const Message = ({ user }: { user: UserType }) => {
                                 }
                             )}
                         >
-                            <p className=' bg-red-200 text-[15px] break-all'>
+                            <p className='text-[15px] break-all'>
                                 {message.text}
                             </p>
                             <p className='time text-[12px] mt-[8px] text-[#CCCCCC]'>
