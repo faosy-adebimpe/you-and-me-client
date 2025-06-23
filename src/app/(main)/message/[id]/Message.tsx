@@ -6,18 +6,15 @@ import { useUserStore } from '@/store/userStore';
 import { MessageType, UserType } from '@/types';
 import classNames from 'classnames';
 import Image from 'next/image';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { format } from 'timeago.js';
 
 const Message = ({ user }: { user: UserType }) => {
-    const messageContainerRef = useRef<HTMLDivElement | null>(null);
-
     // store
     const { authUser, socket } = useUserStore();
     const { messages, setMessages, addNewMessage } = useMessageStore();
 
     const [loading, setLoading] = useState(false);
-    const [initialScroll, setInitialScroll] = useState(0);
 
     const getMessagesFunction = async () => {
         setLoading(true);
@@ -25,8 +22,6 @@ const Message = ({ user }: { user: UserType }) => {
             const response = await messageApi.get(`/${user._id}`);
             const { data } = response;
             setMessages(data);
-            // setInitialScroll(3);
-            setInitialScroll((prev) => prev + 1);
         } catch (error) {
             console.log({ error });
         } finally {
@@ -38,15 +33,6 @@ const Message = ({ user }: { user: UserType }) => {
         setMessages,
         user._id,
     ]);
-
-    useEffect(() => {
-        // auto scroll
-        const messageContainer = messageContainerRef.current;
-        messageContainer?.scrollTo({
-            top: messageContainer.scrollHeight,
-            behavior: initialScroll === 2 ? 'smooth' : 'instant',
-        });
-    }, [messages, initialScroll]);
 
     useEffect(() => {
         // handlers
@@ -86,11 +72,8 @@ const Message = ({ user }: { user: UserType }) => {
         );
     }
     return (
-        <div className='h-full w-full overflow-x-hidden'>
-            <div
-                className='flex gap-[31px] flex-col h-full overflow-y-scroll pr-2 w-full overflow-x-hidden'
-                ref={messageContainerRef}
-            >
+        <div className='h-full w-full'>
+            <div className='flex gap-[31px] flex-col h-full w-full'>
                 {messages.map((message) => (
                     <div
                         className={classNames(
