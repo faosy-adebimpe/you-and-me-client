@@ -68,7 +68,7 @@ const SettingsPage = () => {
         return <ChatLoader />;
     }
     return (
-        <div className='w-full h-full overflow-y-scroll'>
+        <div className='px-3 w-full h-full overflow-y-scroll'>
             <h1 className='text-2xl font-bold text-center p-4'>
                 Account Settings
             </h1>

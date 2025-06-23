@@ -6,7 +6,8 @@
         "dev": "next dev --turbopack",
         "build": "next build",
         "start": "next start",
-        "lint": "next lint"
+        "lint": "next lint",
+        "type-check": "tsc --noEmit"
     },
     "dependencies": {
         "@ducanh2912/next-pwa": "^10.2.9",
@@ -23,6 +24,7 @@
         "react-hot-toast": "^2.5.2",
         "socket.io-client": "^4.8.1",
         "styled-components": "^6.1.18",
+        "tailwind-scrollbar": "^4.0.2",
         "timeago.js": "^4.0.2",
         "zustand": "^5.0.5"
     },

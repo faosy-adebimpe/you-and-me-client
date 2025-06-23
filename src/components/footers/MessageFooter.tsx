@@ -14,6 +14,7 @@ const MessageFooter = ({ user }: { user: UserType }) => {
         if (!message) {
             return;
         }
+        setMessage('');
         setSending(true);
         try {
             const response = await messageApi.post(`/send/${user._id}`, {
@@ -23,7 +24,6 @@ const MessageFooter = ({ user }: { user: UserType }) => {
 
             // add message
             addNewMessage(data);
-            setMessage('');
         } catch (error) {
             console.log({ error });
         } finally {

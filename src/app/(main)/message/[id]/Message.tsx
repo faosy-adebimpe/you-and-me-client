@@ -86,9 +86,9 @@ const Message = ({ user }: { user: UserType }) => {
         );
     }
     return (
-        <div className='container h-full'>
+        <div className='h-full'>
             <div
-                className='flex gap-[31px] flex-col h-full overflow-y-scroll pr-3 w-full overflow-x-hidden'
+                className='flex gap-[31px] flex-col h-full overflow-y-scroll pr-1 md:pr-3 w-full overflow-x-hidden'
                 ref={messageContainerRef}
             >
                 {messages.map((message) => (

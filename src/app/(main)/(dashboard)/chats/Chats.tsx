@@ -10,7 +10,8 @@ const Chats = () => {
     const { users, gettingUsers } = useMessageStore();
 
     return (
-        <div className='container h-full relative'>
+        // <div className='container h-full relative'>
+        <div className='h-full relative'>
             {/* <div className='cover w-full h-full absolute bg-gradient-to-b from-black/0 to-black/50 pointer-events-none'></div> */}
             <GradientCover />
             {gettingUsers ? (
