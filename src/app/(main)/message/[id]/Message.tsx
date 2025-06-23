@@ -88,13 +88,14 @@ const Message = ({ user }: { user: UserType }) => {
     return (
         <div className='h-full'>
             <div
-                className='flex gap-[31px] flex-col h-full overflow-y-scroll pr-1 md:pr-3 w-full overflow-x-hidden'
+                className='flex gap-[31px] flex-col h-full overflow-y-scroll pr-2 w-full overflow-x-hidden'
                 ref={messageContainerRef}
             >
                 {messages.map((message) => (
                     <div
                         className={classNames(
-                            'message max-w-[90%] md:max-w-[70%] flex gap-[18px] items-end',
+                            // 'message max-w-[80%] md:max-w-[70%] flex gap-[18px] items-end',
+                            'message max-w-[80%] md:max-w-[70%] flex gap-[8px] items-end',
                             { 'ml-auto': message.senderId === authUser?._id }
                         )}
                         key={message._id}
