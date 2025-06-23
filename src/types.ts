@@ -71,7 +71,7 @@ export type UserStoreType = {
 
     // logout
     loggingOut: boolean;
-    logout: () => void;
+    logout: () => Promise<boolean>;
 };
 
 // socket

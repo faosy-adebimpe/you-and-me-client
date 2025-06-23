@@ -117,9 +117,11 @@ export const useUserStore = create<UserStoreType>()(
                     const response = await authApi.post('/logout');
                     const { message } = response.data;
                     toast.success(message);
+                    return true;
                 } catch (error: unknown) {
                     const message = errorMessage(error);
                     toast.error(message);
+                    return false;
                 } finally {
                     set({ loggingOut: false });
                 }

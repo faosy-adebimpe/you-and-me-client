@@ -57,9 +57,11 @@ const SettingsPage = () => {
     };
 
     // logout
-    const handleLogout = () => {
-        logout();
-        router.push('/auth/login');
+    const handleLogout = async () => {
+        const result = await logout();
+        if (result) {
+            router.push('/auth/login');
+        }
     };
 
     if (!authUser) {
