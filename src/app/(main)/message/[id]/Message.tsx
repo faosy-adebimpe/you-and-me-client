@@ -86,7 +86,7 @@ const Message = ({ user }: { user: UserType }) => {
         );
     }
     return (
-        <div className='h-full w-full'>
+        <div className='h-full w-full overflow-x-hidden'>
             <div
                 className='flex gap-[31px] flex-col h-full overflow-y-scroll pr-2 w-full overflow-x-scroll'
                 ref={messageContainerRef}
@@ -126,8 +126,10 @@ const Message = ({ user }: { user: UserType }) => {
                                 }
                             )}
                         >
-                            <p className='text text-[15px]'>{message.text}</p>
-                            <p className='time text-[13px] mt-[8px] text-[#CCCCCC]'>
+                            <p className='text text-[15px] break-all'>
+                                {message.text}
+                            </p>
+                            <p className='time text-[12px] mt-[8px] text-[#CCCCCC]'>
                                 {message.createdAt && format(message.createdAt)}
                             </p>
                         </div>
