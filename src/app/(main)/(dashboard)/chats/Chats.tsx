@@ -27,16 +27,19 @@ const Chats = () => {
                             className='flex items-center gap-5 transition-all hover:bg-[#1F1F1F] p-3 rounded-md'
                         >
                             <div className='relative'>
-                                <Image
-                                    src={
-                                        user.image || '/images/avatars/user.png'
-                                    }
-                                    className='opacity-50 rounded-full'
-                                    title={user.username}
-                                    alt={user.username}
-                                    width={40}
-                                    height={40}
-                                />
+                                <div className='w-[40px] h-[40px] rounded-full overflow-hidden'>
+                                    <Image
+                                        src={
+                                            user.image ||
+                                            '/images/avatars/user.png'
+                                        }
+                                        className='opacity-50 object-cover'
+                                        title={user.username}
+                                        alt={user.username}
+                                        width={40}
+                                        height={40}
+                                    />
+                                </div>
                                 <div className='size-[14px] rounded-full border-2 border-[#1C1B1B] bg-[#0FDB66] absolute right-0 bottom-0'></div>
                             </div>
                             <div className='flex-1/2'>

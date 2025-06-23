@@ -100,13 +100,16 @@ const Message = ({ user }: { user: UserType }) => {
                         key={message._id}
                     >
                         {message.senderId !== authUser?._id && (
-                            <Image
-                                src={'/images/avatars/user.png'}
-                                alt={user?.username || ''}
-                                title={user?.username}
-                                width={28}
-                                height={28}
-                            />
+                            <div className='w-[28px] h-[28px] rounded-full overflow-hidden'>
+                                <Image
+                                    src={'/images/avatars/user.png'}
+                                    alt={user?.username || ''}
+                                    title={user?.username}
+                                    className='opacity-50 object-cover'
+                                    width={28}
+                                    height={28}
+                                />
+                            </div>
                         )}
                         <div
                             // bg-gradient-to-tl from-[#2B2B2B] to-[#454545]

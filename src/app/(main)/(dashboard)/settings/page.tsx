@@ -178,10 +178,10 @@ const SettingsPage = () => {
                     <button
                         type='button'
                         className='w-full mt-4 py-2 px-4 bg-blue-600 text-white rounded-md font-semibold hover:bg-blue-700 transition'
-                        disabled={changingPicture || !interactedWith}
+                        disabled={uploadingProfilePicture || !interactedWith}
                         onClick={uploadProfilePicture}
                     >
-                        {changingPicture
+                        {uploadingProfilePicture
                             ? 'Changing picture...'
                             : 'Update profile'}
                     </button>
@@ -193,7 +193,7 @@ const SettingsPage = () => {
                                 disabled={requestingVerificationEmail}
                                 onClick={handleEmailRequest}
                             >
-                                {changingPicture
+                                {requestingVerificationEmail
                                     ? 'Requesting Email...'
                                     : 'Make Request'}
                             </button>
