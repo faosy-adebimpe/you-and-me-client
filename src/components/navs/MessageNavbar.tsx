@@ -27,6 +27,7 @@ const MessageNavbar = ({ user }: Readonly<{ user: UserType }>) => {
                     alt={user?.username || "user's name"}
                     width={32}
                     height={32}
+                    className='rounded-full'
                 />
             </button>
         </div>

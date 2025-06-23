@@ -31,7 +31,7 @@ const Chats = () => {
                                     src={
                                         user.image || '/images/avatars/user.png'
                                     }
-                                    className='opacity-50'
+                                    className='opacity-50 rounded-full'
                                     title={user.username}
                                     alt={user.username}
                                     width={40}
