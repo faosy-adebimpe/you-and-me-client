@@ -102,7 +102,9 @@ const Message = ({ user }: { user: UserType }) => {
                         {message.senderId !== authUser?._id && (
                             <div className='w-[28px] h-[28px] rounded-full overflow-hidden'>
                                 <Image
-                                    src={'/images/avatars/user.png'}
+                                    src={
+                                        user.image || '/images/avatars/user.png'
+                                    }
                                     alt={user?.username || ''}
                                     title={user?.username}
                                     className='opacity-50 object-cover'

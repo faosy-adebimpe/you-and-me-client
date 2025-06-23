@@ -40,22 +40,20 @@ const Chats = () => {
                                         height={40}
                                     />
                                 </div>
-                                <div className='size-[14px] rounded-full border-2 border-[#1C1B1B] bg-[#0FDB66] absolute right-0 bottom-0'></div>
+                                {/* <div className='size-[14px] rounded-full border-2 border-[#1C1B1B] bg-[#0FDB66] absolute right-0 bottom-0'></div> */}
                             </div>
                             <div className='flex-1/2'>
                                 <p className='text-[#FFFFFF]'>
                                     {user.username}
                                 </p>
-                                <p className='text-[#CCCCCC] text-sm'>
-                                    {/* {user.latestMessage} */}
+                                {/* <p className='text-[#CCCCCC] text-sm'>
                                     None yet...
-                                </p>
+                                </p> */}
                             </div>
                             <div className=''>
-                                <p className='text-[#CCCCCC] text-sm'>
-                                    {/* {user.time} */}
+                                {/* <p className='text-[#CCCCCC] text-sm'>
                                     12:00
-                                </p>
+                                </p> */}
                             </div>
                         </Link>
                     ))}
