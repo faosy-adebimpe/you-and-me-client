@@ -126,7 +126,7 @@ const Message = ({ user }: { user: UserType }) => {
                                 }
                             )}
                         >
-                            <p className='text text-[15px] break-all'>
+                            <p className=' bg-red-200 text-[15px] break-all'>
                                 {message.text}
                             </p>
                             <p className='time text-[12px] mt-[8px] text-[#CCCCCC]'>
