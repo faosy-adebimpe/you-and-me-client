@@ -37,6 +37,45 @@ export const useMessageStore = create<MessageStoreType>((set, get) => ({
         return users.find((user) => user._id === id);
     },
 
+    // search user
+    username: '',
+    setUsername: (value) => {
+        const { searchUser } = get();
+        set({ username: value });
+        searchUser();
+    },
+    searchingUser: false,
+    searchUser: async () => {
+        const { username } = get();
+        // if (!username) return;
+        set({ searchingUser: true });
+        try {
+            const response = await messageApi.get(
+                `/users?username=${username}`
+            );
+            const { data } = response;
+            set({ users: data });
+        } catch (error: unknown) {
+            console.log({ error });
+        } finally {
+            set({ searchingUser: false });
+        }
+    },
+    clearSearch: () => {
+        set({ username: '' });
+    },
+
+    // online users
+    onlineUsers: false,
+    setOnlineUsers: (event) => {
+        const checked = event.target.checked;
+        set({ onlineUsers: checked });
+    },
+    toggleOnlineUsers: () => {
+        const { onlineUsers } = get();
+        set({ onlineUsers: !onlineUsers });
+    },
+
     // getSelectedUser: async (id) => {
     //     try {
     //         const response = await messageApi.get(`/users/${id}`);

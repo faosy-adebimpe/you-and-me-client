@@ -1,5 +1,5 @@
 'use client';
-import { sanitizeObject } from '@/lib/utils';
+// import { sanitizeObject } from '@/lib/utils';
 import { useUserStore } from '@/store/userStore';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
@@ -62,10 +62,10 @@ const GetStartedPage = () => {
         if (!validated) return;
 
         // remove empty values
-        const formData = sanitizeObject(form);
+        // const formData = sanitizeObject(form);
 
         // update proifle
-        updateProfile(formData);
+        updateProfile(form);
 
         // go to chats
         router.push('/chats');

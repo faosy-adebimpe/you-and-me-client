@@ -96,6 +96,18 @@ export type MessageStoreType = {
     getUsers: () => void;
     getUser: (username: string) => UserType | undefined;
     getSelectedUser: (id: string) => UserType | undefined;
+
+    // search user
+    username: string;
+    setUsername: (value: string) => void;
+    searchingUser: boolean;
+    searchUser: () => void;
+    clearSearch: () => void;
+
+    // online users
+    onlineUsers: boolean;
+    setOnlineUsers: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    toggleOnlineUsers: () => void;
 };
 
 export type MessageType = {
