@@ -62,7 +62,12 @@ export const useMessageStore = create<MessageStoreType>((set, get) => ({
         }
     },
     clearSearch: () => {
-        set({ username: '' });
+        const { setUsername } = get();
+        setUsername('');
+        // ----------- or -------------
+        // const { searchUser } = get();
+        // set({ username: '' });
+        // searchUser();
     },
 
     // online users
