@@ -236,7 +236,7 @@ const GetStartedPage = () => {
                         className='w-full py-3 rounded-xl bg-[var(--theme-color)] text-white font-bold text-lg shadow-lg hover:opacity-90 transition'
                         disabled={updatingProfile}
                     >
-                        {updatingProfile ? 'Updating profile...' : 'Next'}
+                        {updatingProfile ? 'Updating profile...' : 'Continue'}
                     </button>
                 </div>
             </form>

@@ -43,8 +43,19 @@ const MainFooter = () => {
                             {link.name === 'chats' &&
                                 unreadMessages.length >= 1 && (
                                     <div className='size-5 rounded-full text-white bg-red-500 flex justify-center items-center absolute top-1.5 right-0'>
-                                        <span className='text-xs'>
-                                            {unreadMessages.length}
+                                        <span
+                                            className={classNames({
+                                                'text-xs': !(
+                                                    unreadMessages.length >= 100
+                                                ),
+                                                'text-[10px]':
+                                                    unreadMessages.length >=
+                                                    100,
+                                            })}
+                                        >
+                                            {unreadMessages.length >= 100
+                                                ? '99+'
+                                                : unreadMessages.length}
                                         </span>
                                     </div>
                                 )}
