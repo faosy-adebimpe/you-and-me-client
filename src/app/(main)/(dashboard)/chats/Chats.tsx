@@ -6,8 +6,7 @@ import SearchingLoader from '@/components/loaders/SearchingLoader';
 import { useMessageStore } from '@/store/messageStore';
 import { MagnifyingGlassIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import classNames from 'classnames';
-import Image from 'next/image';
-import Link from 'next/link';
+import User from './User';
 
 const Chats = () => {
     const {
@@ -82,41 +81,7 @@ const Chats = () => {
                     </div>
                     <div className='users h-full flex gap-5 flex-col overflow-y-scroll pr-3'>
                         {users.map((user) => (
-                            <Link
-                                href={`/message/${user._id}`}
-                                key={user.username}
-                                className='flex items-center gap-5 transition-all hover:bg-[#1F1F1F] p-3 rounded-md'
-                            >
-                                <div className='relative'>
-                                    <div className='w-[40px] h-[40px] rounded-full border border-(--theme-color)/20 overflow-hidden'>
-                                        <Image
-                                            src={
-                                                user.image ||
-                                                '/images/avatars/user.png'
-                                            }
-                                            className='opacity-70 object-cover'
-                                            title={user.username}
-                                            alt={user.username}
-                                            width={40}
-                                            height={40}
-                                        />
-                                    </div>
-                                    {/* <div className='size-[14px] rounded-full border-2 border-[#1C1B1B] bg-[#0FDB66] absolute right-0 bottom-0'></div> */}
-                                </div>
-                                <div className='flex-1/2'>
-                                    <p className='text-[#FFFFFF]'>
-                                        {user.username}
-                                    </p>
-                                    {/* <p className='text-[#CCCCCC] text-sm'>
-                                    None yet...
-                                </p> */}
-                                </div>
-                                <div className=''>
-                                    {/* <p className='text-[#CCCCCC] text-sm'>
-                                    12:00
-                                </p> */}
-                                </div>
-                            </Link>
+                            <User key={user._id} user={user} />
                         ))}
                     </div>
                 </div>

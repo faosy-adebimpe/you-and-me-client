@@ -108,6 +108,11 @@ export type MessageStoreType = {
     onlineUsers: boolean;
     setOnlineUsers: (event: React.ChangeEvent<HTMLInputElement>) => void;
     toggleOnlineUsers: () => void;
+
+    // unread messages
+    unreadMessages: MessageType[];
+    gettingUnreadMessages: boolean;
+    getUnreadMessages: () => void;
 };
 
 export type MessageType = {

@@ -6,18 +6,21 @@ import { useEffect } from 'react';
 
 const ConnectSocket = () => {
     const { checkAuth, connectSocket } = useUserStore();
-    const { getUsers } = useMessageStore();
+    const { getUsers, getUnreadMessages } = useMessageStore();
 
     useEffect(() => {
         // check user authentication
         checkAuth();
 
+        // connect socket
+        connectSocket();
+
         // get users
         getUsers();
 
-        // connect socket
-        connectSocket();
-    }, [checkAuth, getUsers, connectSocket]);
+        // get unread messages
+        getUnreadMessages();
+    }, [checkAuth, connectSocket, getUsers, getUnreadMessages]);
     // const { socket } = useUserStore();
 
     // useEffect(() => {

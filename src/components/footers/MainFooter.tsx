@@ -1,5 +1,6 @@
 'use client';
 
+import { useMessageStore } from '@/store/messageStore';
 import {
     // UserGroupIcon,
     ChatBubbleOvalLeftIcon,
@@ -17,6 +18,7 @@ const footerLinks = [
 
 const MainFooter = () => {
     const pathname = usePathname();
+    const { unreadMessages } = useMessageStore();
     return (
         // <footer className='bg-[#707070]'>
         <footer className='bg-[#1F1F1F]'>
@@ -38,11 +40,14 @@ const MainFooter = () => {
                                 })}
                             />
                             {/* uncomment */}
-                            {/* {link.name === 'chats' && (
-                                <div className='size-5 rounded-full text-white bg-red-500 flex justify-center items-center absolute top-1.5 right-0'>
-                                    <span className='text-xs'>5</span>
-                                </div>
-                            )} */}
+                            {link.name === 'chats' &&
+                                unreadMessages.length >= 1 && (
+                                    <div className='size-5 rounded-full text-white bg-red-500 flex justify-center items-center absolute top-1.5 right-0'>
+                                        <span className='text-xs'>
+                                            {unreadMessages.length}
+                                        </span>
+                                    </div>
+                                )}
                         </Link>
                     ))}
                 </div>

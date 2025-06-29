@@ -80,14 +80,18 @@ export const useMessageStore = create<MessageStoreType>((set, get) => ({
         const { onlineUsers } = get();
         set({ onlineUsers: !onlineUsers });
     },
-
-    // getSelectedUser: async (id) => {
-    //     try {
-    //         const response = await messageApi.get(`/users/${id}`);
-    //         const selectedUser = response.data;
-    //         return selectedUser;
-    //     } catch (error) {
-    //         console.log({ error });
-    //     }
-    // },
+    unreadMessages: [],
+    gettingUnreadMessages: false,
+    getUnreadMessages: async () => {
+        set({ gettingUnreadMessages: true });
+        try {
+            const response = await messageApi.get('/unread/messages');
+            const { data } = response;
+            set({ unreadMessages: data });
+        } catch (error: unknown) {
+            console.log({ error });
+        } finally {
+            set({ gettingUnreadMessages: false });
+        }
+    },
 }));

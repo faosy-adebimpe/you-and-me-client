@@ -1,3 +1,4 @@
+import { MessageType } from '@/types';
 import axios from 'axios';
 
 export const errorMessage = (error: unknown) => {
@@ -10,4 +11,9 @@ export const errorMessage = (error: unknown) => {
     } else {
         return error;
     }
+};
+
+export const filterMessages = (messages: MessageType[], id: string) => {
+    const userMessages = messages.filter((message) => message.senderId === id);
+    return userMessages;
 };
