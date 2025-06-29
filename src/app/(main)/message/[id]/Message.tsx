@@ -115,7 +115,7 @@ const Message = ({ user }: { user: UserType }) => {
                             className={classNames(
                                 'bg-gradient-to-tl from-[#2B2B2B] p-3',
                                 {
-                                    'to-(--theme-color) rounded-[20px_20px_0px_20px]':
+                                    'to-(--theme-color) rounded-[20px_20px_0px_20px] mr-2':
                                         message.senderId === authUser?._id,
                                     'to-[#454545] rounded-[20px_20px_20px_0]':
                                         message.senderId !== authUser?._id,
