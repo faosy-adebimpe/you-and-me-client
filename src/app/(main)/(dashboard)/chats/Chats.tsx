@@ -22,14 +22,9 @@ const Chats = () => {
     } = useMessageStore();
 
     return (
-        // <div className='container h-full relative'>
         <div className='h-full relative'>
-            {/* <div className='cover w-full h-full absolute bg-gradient-to-b from-black/0 to-black/50 pointer-events-none'></div> */}
             <GradientCover />
             {gettingUsers ? (
-                // <div className='w-full h-full flex justify-center items-center'>
-                //     <p className='text-sm'>Loading...</p>
-                // </div>
                 <ChatLoader />
             ) : (
                 <div className='h-full flex flex-col gap-5'>
@@ -93,13 +88,13 @@ const Chats = () => {
                                 className='flex items-center gap-5 transition-all hover:bg-[#1F1F1F] p-3 rounded-md'
                             >
                                 <div className='relative'>
-                                    <div className='w-[40px] h-[40px] rounded-full overflow-hidden'>
+                                    <div className='w-[40px] h-[40px] rounded-full border border-(--theme-color)/20 overflow-hidden'>
                                         <Image
                                             src={
                                                 user.image ||
                                                 '/images/avatars/user.png'
                                             }
-                                            className='opacity-50 object-cover'
+                                            className='opacity-70 object-cover'
                                             title={user.username}
                                             alt={user.username}
                                             width={40}

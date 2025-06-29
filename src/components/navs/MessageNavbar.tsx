@@ -21,14 +21,14 @@ const MessageNavbar = ({ user }: Readonly<{ user: UserType }>) => {
             </div>
             <button className='size-10 rounded-full flex justify-center items-center hover:bg-black/30'>
                 {/* <UserCircleIcon className='size-7' /> */}
-                <div className='w-[32px] h-[32px] rounded-full overflow-hidden'>
+                <div className='w-[32px] h-[32px] rounded-full overflow-hidden border border-(--theme-color)/20'>
                     <Image
                         src={user.image || '/images/avatars/user.png'}
                         title={user?.username}
                         alt={user?.username || "user's name"}
                         width={32}
                         height={32}
-                        className='opacity-50 object-cover'
+                        className='opacity-70 object-cover'
                     />
                 </div>
             </button>

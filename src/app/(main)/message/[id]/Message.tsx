@@ -55,12 +55,7 @@ const Message = ({ user }: { user: UserType }) => {
     }, [addNewMessage, getMessages, socket]);
 
     if (loading) {
-        return (
-            // <div className='w-full h-full flex justify-center items-center'>
-            //     <p className='text-sm'>Loading messages...</p>
-            // </div>
-            <ChatLoader />
-        );
+        return <ChatLoader />;
     }
     if (messages.length === 0) {
         return (
@@ -73,7 +68,7 @@ const Message = ({ user }: { user: UserType }) => {
     }
     return (
         <div className='h-full w-full'>
-            <div className='flex gap-[31px] flex-col h-full w-full'>
+            <div className='flex gap-[31px] flex-col h-full w-full overflow-auto'>
                 {messages.map((message) => (
                     <div
                         className={classNames(
@@ -84,14 +79,14 @@ const Message = ({ user }: { user: UserType }) => {
                         key={message._id}
                     >
                         {message.senderId !== authUser?._id && (
-                            <div className='w-[28px] h-[28px] rounded-full overflow-hidden'>
+                            <div className='w-[28px] h-[28px] rounded-full overflow-hidden border border-(--theme-color)/20'>
                                 <Image
                                     src={
                                         user.image || '/images/avatars/user.png'
                                     }
                                     alt={user?.username || ''}
                                     title={user?.username}
-                                    className='opacity-50 object-cover'
+                                    className='opacity-70 object-cover'
                                     width={28}
                                     height={28}
                                 />
