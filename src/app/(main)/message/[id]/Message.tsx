@@ -6,13 +6,15 @@ import { useUserStore } from '@/store/userStore';
 import { MessageType, UserType } from '@/types';
 import classNames from 'classnames';
 import Image from 'next/image';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { format } from 'timeago.js';
 
 const Message = ({ user }: { user: UserType }) => {
     // store
     const { authUser, socket } = useUserStore();
     const { messages, setMessages, addNewMessage } = useMessageStore();
+    const messageContainer = useRef<HTMLDivElement>(null);
+    const initialScroll = useRef(true);
 
     const [loading, setLoading] = useState(false);
 
@@ -21,6 +23,7 @@ const Message = ({ user }: { user: UserType }) => {
         try {
             const response = await messageApi.get(`/${user._id}`);
             const { data } = response;
+            initialScroll.current = true; // <--- Ensure instant scroll on first load
             setMessages(data);
         } catch (error) {
             console.log({ error });
@@ -54,6 +57,18 @@ const Message = ({ user }: { user: UserType }) => {
         };
     }, [addNewMessage, getMessages, socket]);
 
+    useEffect(() => {
+        const container = messageContainer.current;
+        if (!container) return;
+        container.scrollTo({
+            top: container.scrollHeight,
+            behavior: initialScroll.current ? 'auto' : 'smooth', // 'auto' for instant, 'smooth' for animation
+        });
+        if (initialScroll.current) {
+            initialScroll.current = false;
+        }
+    }, [messages]);
+
     if (loading) {
         return <ChatLoader />;
     }
@@ -68,7 +83,10 @@ const Message = ({ user }: { user: UserType }) => {
     }
     return (
         <div className='h-full w-full'>
-            <div className='flex gap-[31px] flex-col h-full w-full overflow-auto'>
+            <div
+                className='flex gap-[31px] flex-col h-full w-full overflow-auto'
+                ref={messageContainer}
+            >
                 {messages.map((message) => (
                     <div
                         className={classNames(
