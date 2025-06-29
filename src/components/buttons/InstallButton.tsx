@@ -54,7 +54,7 @@ const InstallButton = () => {
                 </button>
             )} */}
             {isInstallable && (
-                <div className='fixed top-10 right-10 w-12 h-12 bg-black/50 rounded-full flex justify-center items-center'>
+                <div className='fixed top-10 right-5 w-12 h-12 bg-black/50 rounded-full flex justify-center items-center opacity-50'>
                     <button
                         onClick={handleInstallClick}
                         className='install-button'

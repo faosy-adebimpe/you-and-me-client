@@ -11,7 +11,8 @@ const DefaultLayout = ({
     children,
 }: Readonly<{ children: React.ReactNode }>) => {
     return (
-        <div className='w-screen h-screen bg-[#1C1B1B] text-[#FFFFFF] grid grid-rows-[1fr_8fr_1fr] overflow-hidden'>
+        // <div className='w-screen h-screen bg-[#1C1B1B] text-[#FFFFFF] grid grid-rows-[1fr_8fr_1fr] overflow-hidden'>
+        <div className='w-screen h-[100dvh] bg-[#1C1B1B] text-[#FFFFFF] grid grid-rows-[1fr_8fr_1fr] overflow-hidden'>
             <MainNavbar />
             {/* <main className='p-3 overflow-hidden'>{children}</main> */}
             <main className='overflow-hidden'>{children}</main>
