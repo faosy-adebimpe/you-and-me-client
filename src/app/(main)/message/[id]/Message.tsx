@@ -43,6 +43,9 @@ const Message = ({ user }: { user: UserType }) => {
         const handleNewMessage = (newMessage: MessageType) => {
             // setMessages((prev) => [...prev, newMessage]);
             addNewMessage(newMessage);
+
+            // read messages
+            readMessages(user._id);
         };
 
         // events
