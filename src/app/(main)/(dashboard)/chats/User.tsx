@@ -3,7 +3,7 @@
 import { filterMessages } from '@/lib/utils';
 import { useMessageStore } from '@/store/messageStore';
 import { UserType } from '@/types';
-import classNames from 'classnames';
+// import classNames from 'classnames';
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
@@ -43,14 +43,14 @@ const User = ({ user }: { user: UserType }) => {
                 </p>
             </div>
             {messageCount >= 1 && (
-                <div className='size-7 bg-red-500 rounded-full flex justify-center items-center'>
+                <div className='size-6 bg-red-500 rounded-full flex justify-center items-center'>
                     {/* <p className='text-[#CCCCCC] text-sm'> */}
                     <p
-                        className={classNames('text-white', {
-                            'text-xs': messageCount >= 100,
-                            'text-sm': messageCount <= 0,
-                        })}
-                        // className='text-white text-sm'
+                        // className={classNames('text-white', {
+                        //     'text-xs': messageCount >= 100,
+                        //     'text-[10px]': messageCount <= 0,
+                        // })}
+                        className='text-white text-[11px]'
                     >
                         {messageCount >= 100 ? '99+' : messageCount}
                     </p>

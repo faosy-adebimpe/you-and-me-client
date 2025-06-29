@@ -113,6 +113,11 @@ export type MessageStoreType = {
     unreadMessages: MessageType[];
     gettingUnreadMessages: boolean;
     getUnreadMessages: () => void;
+
+    // read messages
+    readMessagesData: MessageType[];
+    readingMessages: boolean;
+    readMessages: (senderId: string) => void;
 };
 
 export type MessageType = {

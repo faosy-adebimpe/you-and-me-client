@@ -94,4 +94,26 @@ export const useMessageStore = create<MessageStoreType>((set, get) => ({
             set({ gettingUnreadMessages: false });
         }
     },
+
+    readMessagesData: [],
+    readingMessages: false,
+    readMessages: async (senderId) => {
+        set({ readingMessages: true });
+        try {
+            const response = await messageApi.patch(`/read/${senderId}`);
+            const { data } = response;
+            set({ readMessagesData: data });
+
+            // remove read messages or fetch new
+            const { unreadMessages } = get();
+            const newUnreadMessages = unreadMessages.filter(
+                (message) => message.senderId !== senderId
+            );
+            set({ unreadMessages: newUnreadMessages });
+        } catch (error: unknown) {
+            console.log({ error });
+        } finally {
+            set({ readingMessages: false });
+        }
+    },
 }));

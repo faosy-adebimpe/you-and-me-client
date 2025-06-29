@@ -12,7 +12,8 @@ import { format } from 'timeago.js';
 const Message = ({ user }: { user: UserType }) => {
     // store
     const { authUser, socket } = useUserStore();
-    const { messages, setMessages, addNewMessage } = useMessageStore();
+    const { messages, setMessages, addNewMessage, readMessages } =
+        useMessageStore();
     const messageContainer = useRef<HTMLDivElement>(null);
     const initialScroll = useRef(true);
 
@@ -68,6 +69,11 @@ const Message = ({ user }: { user: UserType }) => {
             initialScroll.current = false;
         }
     }, [messages]);
+
+    // read messages
+    useEffect(() => {
+        readMessages(user._id);
+    }, [readMessages, user._id]);
 
     if (loading) {
         return <ChatLoader />;
