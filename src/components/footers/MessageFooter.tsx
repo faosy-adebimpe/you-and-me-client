@@ -3,7 +3,7 @@ import { messageApi } from '@/lib/api';
 import { UserType } from '@/types';
 import { CameraIcon, PaperAirplaneIcon } from '@heroicons/react/24/outline';
 import { useMessageStore } from '@/store/messageStore';
-// import TextAreaAutosize from 'react-textarea-autosize';
+import TextAreaAutosize from 'react-textarea-autosize';
 
 const MessageFooter = ({ user }: { user: UserType }) => {
     const { addNewMessage } = useMessageStore();
@@ -35,10 +35,10 @@ const MessageFooter = ({ user }: { user: UserType }) => {
             {/* <form className='flex gap-5 items-end h-full'> */}
             <form className='flex gap-3 items-end h-full'>
                 {/* <div className='h-full flex gap-3 items-end flex-1 bg-[#2B2B2B] rounded-[26px] px-3 overflow-hidden py-2'> */}
-                <div className='flex gap-3 flex-1 items-end bg-[#2B2B2B] rounded-[16px] p-3 overflow-hidden'>
-                    <textarea
-                        // maxRows={5}
-                        // minRows={1.2}
+                <div className='flex gap-3 flex-1 items-end bg-[#2B2B2B] rounded-[16px] p-3'>
+                    <TextAreaAutosize
+                        maxRows={5}
+                        minRows={1.2}
                         name='message'
                         id='message'
                         value={message}
