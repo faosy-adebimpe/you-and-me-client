@@ -36,9 +36,9 @@ const MessageFooter = ({ user }: { user: UserType }) => {
             <form className='flex gap-3 items-end h-full'>
                 {/* <div className='h-full flex gap-3 items-end flex-1 bg-[#2B2B2B] rounded-[26px] px-3 overflow-hidden py-2'> */}
                 <div className='flex gap-3 flex-1 items-end bg-[#2B2B2B] rounded-[16px] p-3 overflow-hidden'>
-                    <TextAreaAutosize
-                        maxRows={5}
-                        minRows={1.2}
+                    <textarea
+                        // maxRows={5}
+                        // minRows={1.2}
                         name='message'
                         id='message'
                         value={message}
