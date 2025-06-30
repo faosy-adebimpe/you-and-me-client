@@ -3,7 +3,7 @@ import { messageApi } from '@/lib/api';
 import { UserType } from '@/types';
 import { CameraIcon, PaperAirplaneIcon } from '@heroicons/react/24/outline';
 import { useMessageStore } from '@/store/messageStore';
-import TextAreaAutosize from 'react-textarea-autosize';
+// import TextAreaAutosize from 'react-textarea-autosize';
 
 const MessageFooter = ({ user }: { user: UserType }) => {
     const { addNewMessage } = useMessageStore();
