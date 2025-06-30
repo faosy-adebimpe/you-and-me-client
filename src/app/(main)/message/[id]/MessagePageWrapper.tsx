@@ -29,11 +29,12 @@ const MessagePageWrapper = ({ id }: { id: string }) => {
         return;
     }
     return (
-        <div className='grid grid-rows-[1fr_8fr_1fr] min-h-[100dvh] max-h-[100dvh] w-screen bg-[#1C1B1B] text-white'>
+        // <div className='grid grid-rows-[1fr_8fr_1fr] min-h-[100dvh] max-h-[100dvh] w-screen bg-[#1C1B1B] text-white'>
+        <div className='flex flex-col min-h-[100dvh] max-h-[100dvh] w-screen bg-[#1C1B1B] text-white'>
             <MessageNavbar user={user} />
-            <main className='p-3 overflow-hidden'>
-                <Message user={user} />
-            </main>
+            {/* <main className='p-3 overflow-auto flex-1'> */}
+            <Message user={user} />
+            {/* </main> */}
             <MessageFooter user={user} />
         </div>
     );

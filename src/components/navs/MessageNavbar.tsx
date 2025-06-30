@@ -8,7 +8,7 @@ const MessageNavbar = ({ user }: Readonly<{ user: UserType }>) => {
     const router = useRouter();
 
     return (
-        <div className='container flex justify-between items-center'>
+        <div className='p-3 h-[10dvh] flex justify-between items-center border-b border-(--theme-color)/10'>
             <button
                 className='size-10 rounded-full flex justify-center items-center hover:bg-black/30'
                 onClick={() => router.back()}

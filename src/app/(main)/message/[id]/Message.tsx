@@ -12,8 +12,11 @@ import { format } from 'timeago.js';
 const Message = ({ user }: { user: UserType }) => {
     // store
     const { authUser, socket } = useUserStore();
-    const { messages, setMessages, addNewMessage, readMessages } =
-        useMessageStore();
+    const { messages } = useMessageStore();
+    const setMessages = useMessageStore((state) => state.setMessages);
+    const addNewMessage = useMessageStore((state) => state.addNewMessage);
+    const readMessages = useMessageStore((state) => state.readMessages);
+
     const messageContainer = useRef<HTMLDivElement>(null);
     const initialScroll = useRef(true);
 
@@ -59,7 +62,7 @@ const Message = ({ user }: { user: UserType }) => {
         return () => {
             socket.off('new-message', handleNewMessage);
         };
-    }, [addNewMessage, getMessages, socket]);
+    }, [addNewMessage, getMessages, socket, readMessages, user._id]);
 
     useEffect(() => {
         const container = messageContainer.current;
@@ -79,11 +82,15 @@ const Message = ({ user }: { user: UserType }) => {
     }, [readMessages, user._id]);
 
     if (loading) {
-        return <ChatLoader />;
+        return (
+            <div className='w-full h-[100vh] flex justify-center items-center'>
+                <ChatLoader />
+            </div>
+        );
     }
     if (messages.length === 0) {
         return (
-            <div className='w-full h-full flex justify-center items-center'>
+            <div className='w-full h-[100vh] flex justify-center items-center'>
                 <p className='text-sm opacity-30'>
                     Start chat with {user.username}
                 </p>
@@ -91,10 +98,11 @@ const Message = ({ user }: { user: UserType }) => {
         );
     }
     return (
-        <div className='h-full w-full'>
+        // <main className='h-full w-full'>
+        <main className='p-3 overflow-auto flex-1' ref={messageContainer}>
             <div
                 className='flex gap-[31px] flex-col h-full w-full overflow-auto'
-                ref={messageContainer}
+                // ref={messageContainer}
             >
                 {messages.map((message) => (
                     <div
@@ -131,9 +139,18 @@ const Message = ({ user }: { user: UserType }) => {
                                 }
                             )}
                         >
-                            <p className='text-[15px] break-all'>
-                                {message.text}
-                            </p>
+                            {/* <p className='text-[15px] break-all'> */}
+                            {message.text && (
+                                <p
+                                    className='text-[15px]'
+                                    dangerouslySetInnerHTML={{
+                                        __html: message.text.replace(
+                                            /\n/g,
+                                            '<br />'
+                                        ),
+                                    }}
+                                />
+                            )}
                             <p className='time text-[12px] mt-[8px] text-[#CCCCCC]'>
                                 {message.createdAt && format(message.createdAt)}
                             </p>
@@ -141,7 +158,7 @@ const Message = ({ user }: { user: UserType }) => {
                     </div>
                 ))}
             </div>
-        </div>
+        </main>
     );
 };
 
