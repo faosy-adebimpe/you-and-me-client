@@ -44,7 +44,7 @@ const MessageFooter = ({ user }: { user: UserType }) => {
                         value={message}
                         onChange={(event) => setMessage(event.target.value)}
                         placeholder='Type a message...'
-                        className='w-full h-full border-none outline-none resize-none'
+                        className='w-full h-full border-none outline-none resize-none max-h-32 overflow-y-auto'
                     />
                     {/* [#007EF4] */}
                     <button
