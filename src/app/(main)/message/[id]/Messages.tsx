@@ -11,7 +11,7 @@ import AwaitingMessage from './AwaitingMessage';
 const Messages = ({ user }: { user: UserType }) => {
     // store
     const { socket } = useUserStore();
-    const { messages, awaitingMessage } = useMessageStore();
+    const { messages, awaitingMessages } = useMessageStore();
     const setMessages = useMessageStore((state) => state.setMessages);
     const addNewMessage = useMessageStore((state) => state.addNewMessage);
     const readMessages = useMessageStore((state) => state.readMessages);
@@ -71,8 +71,7 @@ const Messages = ({ user }: { user: UserType }) => {
         if (initialScroll.current) {
             initialScroll.current = false;
         }
-        // }, [messages, awaitingMessages]);
-    }, [messages, awaitingMessage]);
+    }, [messages, awaitingMessages]);
 
     // read messages
     useEffect(() => {
@@ -105,12 +104,9 @@ const Messages = ({ user }: { user: UserType }) => {
                 {messages.map((message) => (
                     <Message key={message._id} user={user} message={message} />
                 ))}
-                {/* {awaitingMessages.map((message) => (
+                {awaitingMessages.map((message) => (
                     <AwaitingMessage key={message.id} message={message} />
-                ))} */}
-                {awaitingMessage && (
-                    <AwaitingMessage message={awaitingMessage} />
-                )}
+                ))}
             </div>
         </main>
     );
