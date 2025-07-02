@@ -1,52 +1,14 @@
-import React, { useState } from 'react';
-import { messageApi } from '@/lib/api';
 import { UserType } from '@/types';
 import { CameraIcon, PaperAirplaneIcon } from '@heroicons/react/24/outline';
 import { useMessageStore } from '@/store/messageStore';
 import TextAreaAutosize from 'react-textarea-autosize';
-import { nanoid } from 'nanoid';
 
 const MessageFooter = ({ user }: { user: UserType }) => {
-    const { addNewMessage, setAwaitingMessages, removeAwaitingMessage } =
+    const { message, setMessage, sendingMessage, sendMessage } =
         useMessageStore();
-    const [message, setMessage] = useState('');
-    const [sending, setSending] = useState(false);
-
-    const sendMessage = async () => {
-        if (!message) {
-            return;
-        }
-        setMessage('');
-        setSending(true);
-        try {
-            const newMessage = {
-                id: nanoid(),
-                text: message,
-            };
-            setAwaitingMessages(newMessage);
-            // await new Promise((resolve) => setTimeout(resolve, 5000));
-            const response = await messageApi.post(
-                `/send/${user._id}`,
-                newMessage
-            );
-            const { data } = response;
-
-            // add message
-            addNewMessage(data);
-
-            // remove placeholder
-            removeAwaitingMessage(newMessage.id);
-        } catch (error) {
-            console.log({ error });
-        } finally {
-            setSending(false);
-        }
-    };
     return (
         <div className='container h-full'>
-            {/* <form className='flex gap-5 items-end h-full'> */}
             <form className='flex gap-3 items-end h-full'>
-                {/* <div className='h-full flex gap-3 items-end flex-1 bg-[#2B2B2B] rounded-[26px] px-3 overflow-hidden py-2'> */}
                 <div className='flex gap-3 flex-1 items-end bg-[#2B2B2B] rounded-[16px] p-3'>
                     <TextAreaAutosize
                         maxRows={5}
@@ -61,7 +23,7 @@ const MessageFooter = ({ user }: { user: UserType }) => {
                     {/* [#007EF4] */}
                     <button
                         className='size-9 rounded-full bg-(--theme-color) flex justify-center items-center disabled:bg-(--background-color)'
-                        disabled={sending || true}
+                        disabled={sendingMessage || true}
                         type='button'
                     >
                         <CameraIcon className='size-5' />
@@ -70,9 +32,9 @@ const MessageFooter = ({ user }: { user: UserType }) => {
                 <button
                     // className='size-9 rounded-full bg-(--theme-color) flex justify-center items-center disabled:bg-(--background-color) mb-[5px]'
                     className='size-9 rounded-full bg-(--theme-color) flex justify-center items-center disabled:bg-(--background-color) mb-3'
-                    disabled={sending || !message}
+                    disabled={sendingMessage || !message}
                     // type='submit'
-                    onClick={sendMessage}
+                    onClick={() => sendMessage(user)}
                 >
                     <PaperAirplaneIcon className='size-5' />
                 </button>

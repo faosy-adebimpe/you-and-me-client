@@ -1,5 +1,6 @@
 import { messageApi } from '@/lib/api';
 import { MessageStoreType } from '@/types';
+import { nanoid } from 'nanoid';
 import { create } from 'zustand';
 
 export const useMessageStore = create<MessageStoreType>((set, get) => ({
@@ -148,5 +149,48 @@ export const useMessageStore = create<MessageStoreType>((set, get) => ({
         );
 
         set({ awaitingMessages: newAwaitingMessages });
+    },
+
+    //
+    message: '',
+    setMessage: (value) => {
+        set({ message: value });
+    },
+    sendingMessage: false,
+    sendMessage: async (user) => {
+        const {
+            message,
+            addNewMessage,
+            setAwaitingMessages,
+            removeAwaitingMessage,
+        } = get();
+        if (!message) {
+            return;
+        }
+        set({ sendingMessage: true });
+        set({ message: '' });
+        try {
+            const newMessage = {
+                id: nanoid(),
+                text: message,
+            };
+            setAwaitingMessages(newMessage);
+            // await new Promise((resolve) => setTimeout(resolve, 5000));
+            const response = await messageApi.post(
+                `/send/${user._id}`,
+                newMessage
+            );
+            const { data } = response;
+
+            // add message
+            addNewMessage(data);
+
+            // remove placeholder
+            removeAwaitingMessage(newMessage.id);
+        } catch (error: unknown) {
+            console.log({ error });
+        } finally {
+            set({ sendingMessage: false });
+        }
     },
 }));

@@ -11,8 +11,7 @@ import AwaitingMessage from './AwaitingMessage';
 const Messages = ({ user }: { user: UserType }) => {
     // store
     const { socket } = useUserStore();
-    const { messages, awaitingMessages, removeAwaitingMessage } =
-        useMessageStore();
+    const { messages, awaitingMessages } = useMessageStore();
     const setMessages = useMessageStore((state) => state.setMessages);
     const addNewMessage = useMessageStore((state) => state.addNewMessage);
     const readMessages = useMessageStore((state) => state.readMessages);
@@ -47,9 +46,9 @@ const Messages = ({ user }: { user: UserType }) => {
             addNewMessage(newMessage);
 
             // // Remove the awaiting message if it matches (by temp id or clientId)
-            if (newMessage.id) {
-                removeAwaitingMessage(newMessage.id);
-            }
+            // if (newMessage.id) {
+            //     removeAwaitingMessage(newMessage.id);
+            // }
 
             readMessages(user._id);
         };
@@ -65,14 +64,7 @@ const Messages = ({ user }: { user: UserType }) => {
         return () => {
             socket.off('new-message', handleNewMessage);
         };
-    }, [
-        addNewMessage,
-        getMessages,
-        socket,
-        readMessages,
-        user._id,
-        removeAwaitingMessage,
-    ]);
+    }, [addNewMessage, getMessages, socket, readMessages, user._id]);
 
     useEffect(() => {
         const container = messageContainer.current;

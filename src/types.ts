@@ -128,6 +128,12 @@ export type MessageStoreType = {
     awaitingMessages: MessageType[];
     setAwaitingMessages: (message: MessageType) => void;
     removeAwaitingMessage: (id: string) => void;
+
+    // sending messages
+    message: string;
+    setMessage: (value: string) => void;
+    sendingMessage: boolean;
+    sendMessage: (user: UserType) => void;
 };
 
 export type MessageType = {
