@@ -69,15 +69,24 @@ export type UserStoreType = {
     requestingVerificationEmail: boolean;
     requestVerificationEmail: () => void;
 
+    // online users
+    onlineUsers: OnlineUsersType;
+    getOnlineUsers: (onlineUsers: OnlineUsersType) => void;
+
     // logout
     loggingOut: boolean;
     logout: () => Promise<boolean>;
 };
 
+// online users types
+// export type OnlineUsersType = { [key: string]: string };
+export type OnlineUsersType = string[];
+
 // socket
 export type ServerToClientProps = {
     message: (data: string) => void;
     'new-message': (data: MessageType) => void;
+    'get-online-users': (onlineUers: OnlineUsersType) => void;
 };
 export type ClientToServerProps = {
     seen: (data: string) => void;
@@ -128,6 +137,7 @@ export type MessageStoreType = {
     awaitingMessages: MessageType[];
     setAwaitingMessages: (message: MessageType) => void;
     removeAwaitingMessage: (id: string) => void;
+    clearAwaitingMessages: () => void;
     //
     awaitingMessage: MessageType | null;
 

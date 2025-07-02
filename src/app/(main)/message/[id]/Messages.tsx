@@ -11,7 +11,8 @@ import AwaitingMessage from './AwaitingMessage';
 const Messages = ({ user }: { user: UserType }) => {
     // store
     const { socket } = useUserStore();
-    const { messages, awaitingMessages } = useMessageStore();
+    const { messages, awaitingMessages, clearAwaitingMessages } =
+        useMessageStore();
     const setMessages = useMessageStore((state) => state.setMessages);
     const addNewMessage = useMessageStore((state) => state.addNewMessage);
     const readMessages = useMessageStore((state) => state.readMessages);
@@ -72,6 +73,11 @@ const Messages = ({ user }: { user: UserType }) => {
             initialScroll.current = false;
         }
     }, [messages, awaitingMessages]);
+
+    // clear awaiting chats
+    useEffect(() => {
+        clearAwaitingMessages();
+    }, [clearAwaitingMessages]);
 
     // read messages
     useEffect(() => {

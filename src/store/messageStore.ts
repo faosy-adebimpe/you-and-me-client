@@ -149,6 +149,9 @@ export const useMessageStore = create<MessageStoreType>((set, get) => ({
         );
         set({ awaitingMessages: newAwaitingMessages });
     },
+    clearAwaitingMessages: () => {
+        set({ awaitingMessages: [] });
+    },
     awaitingMessage: null,
 
     //

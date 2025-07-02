@@ -2,7 +2,9 @@
 
 import { filterMessages } from '@/lib/utils';
 import { useMessageStore } from '@/store/messageStore';
+import { useUserStore } from '@/store/userStore';
 import { UserType } from '@/types';
+import classNames from 'classnames';
 // import classNames from 'classnames';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -10,12 +12,14 @@ import React from 'react';
 
 const User = ({ user }: { user: UserType }) => {
     const { unreadMessages } = useMessageStore();
+    const { onlineUsers } = useUserStore();
     const messages = filterMessages(unreadMessages, user._id);
     // const messages = unreadMessages.filter(message => message.senderId === user._id);
     const messageCount = messages.length;
 
     // check if it will not modiry the original message;
     const latestMessage = messages[messageCount - 1];
+    const online = onlineUsers.includes(user._id);
     return (
         <Link
             href={`/message/${user._id}`}
@@ -33,7 +37,19 @@ const User = ({ user }: { user: UserType }) => {
                         height={40}
                     />
                 </div>
-                {/* <div className='size-[14px] rounded-full border-2 border-[#1C1B1B] bg-[#0FDB66] absolute right-0 bottom-0'></div> */}
+                <div
+                    // className={classNames(
+                    //     'size-[14px] rounded-full border-2 border-[#1C1B1B] absolute right-0 bottom-0',
+                    //     { ' bg-[#0FDB66]': online, ' bg-[#636363]': !online }
+                    // )}
+                    className={classNames(
+                        'size-[14px] rounded-full border-2 border-[#1C1B1B] absolute right-0 bottom-0',
+                        {
+                            ' bg-(--theme-color)': online,
+                            ' bg-[#636363]': !online,
+                        }
+                    )}
+                ></div>
             </div>
             {/* <div className='flex-1/2 bg-red-200'> */}
             <div className='flex-1/2 w-1/2'>

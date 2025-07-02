@@ -5,7 +5,7 @@ import { useUserStore } from '@/store/userStore';
 import { useEffect } from 'react';
 
 const ConnectSocket = () => {
-    const { checkAuth, connectSocket } = useUserStore();
+    const { checkAuth, connectSocket, socket, getOnlineUsers } = useUserStore();
     const { getUsers, getUnreadMessages, getAllMessages } = useMessageStore();
 
     useEffect(() => {
@@ -24,6 +24,17 @@ const ConnectSocket = () => {
         // get all messages
         getAllMessages();
     }, [checkAuth, connectSocket, getUsers, getUnreadMessages, getAllMessages]);
+
+    useEffect(() => {
+        if (!socket || !getOnlineUsers) return;
+
+        socket.on('get-online-users', getOnlineUsers);
+
+        return () => {
+            socket.off('get-online-users', getOnlineUsers);
+        };
+    }, [socket, getOnlineUsers]);
+
     // const { socket } = useUserStore();
 
     // useEffect(() => {

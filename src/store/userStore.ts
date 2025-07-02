@@ -106,9 +106,17 @@ export const useUserStore = create<UserStoreType>()(
                 }
             },
 
+            // online users
+            onlineUsers: [],
+            getOnlineUsers: (onlineUsers) => {
+                set({ onlineUsers });
+                // console.log({ onlineUsers });
+            },
+
             // logout
             loggingOut: false,
             logout: async () => {
+                const { disconnectSocket } = get();
                 set({ loggingOut: true });
                 try {
                     // remove _id from local storage
@@ -116,6 +124,10 @@ export const useUserStore = create<UserStoreType>()(
                         localStorage.removeItem('_id');
                     const response = await authApi.post('/logout');
                     const { message } = response.data;
+
+                    // disconnect socket
+                    disconnectSocket();
+
                     toast.success(message);
                     return true;
                 } catch (error: unknown) {
