@@ -4,6 +4,7 @@ import InstallButton from '@/components/buttons/InstallButton';
 import MarkerIcon from '@/components/icons/MarkerIcon';
 import ChatLoader from '@/components/loaders/ChatLoader';
 import SilentLoader from '@/components/loaders/SilentLoader';
+import { joinNames } from '@/lib/utils';
 import { useUserStore } from '@/store/userStore';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
@@ -142,13 +143,10 @@ const SettingsPage = () => {
                         </label>
                         <input
                             type='text'
-                            value={
-                                authUser.firstName
-                                    ? authUser?.firstName +
-                                      ' ' +
-                                      authUser?.lastName
-                                    : ''
-                            }
+                            value={joinNames(
+                                authUser.firstName,
+                                authUser.lastName
+                            )}
                             disabled
                             className='w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-100 text-gray-700 cursor-not-allowed'
                             readOnly
