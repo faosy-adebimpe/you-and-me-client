@@ -162,8 +162,8 @@ export const useMessageStore = create<MessageStoreType>((set, get) => ({
         const {
             message,
             addNewMessage,
-            setAwaitingMessages,
-            removeAwaitingMessage,
+            // setAwaitingMessages,
+            // removeAwaitingMessage,
         } = get();
         if (!message) {
             return;
