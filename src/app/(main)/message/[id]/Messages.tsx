@@ -11,7 +11,7 @@ import AwaitingMessage from './AwaitingMessage';
 const Messages = ({ user }: { user: UserType }) => {
     // store
     const { socket } = useUserStore();
-    const { messages, awaitingMessages } = useMessageStore();
+    const { messages, awaitingMessage } = useMessageStore();
     const setMessages = useMessageStore((state) => state.setMessages);
     const addNewMessage = useMessageStore((state) => state.addNewMessage);
     const readMessages = useMessageStore((state) => state.readMessages);
@@ -45,11 +45,6 @@ const Messages = ({ user }: { user: UserType }) => {
         const handleNewMessage = (newMessage: MessageType) => {
             addNewMessage(newMessage);
 
-            // // Remove the awaiting message if it matches (by temp id or clientId)
-            // if (newMessage.id) {
-            //     removeAwaitingMessage(newMessage.id);
-            // }
-
             readMessages(user._id);
         };
 
@@ -76,7 +71,8 @@ const Messages = ({ user }: { user: UserType }) => {
         if (initialScroll.current) {
             initialScroll.current = false;
         }
-    }, [messages, awaitingMessages]);
+        // }, [messages, awaitingMessages]);
+    }, [messages, awaitingMessage]);
 
     // read messages
     useEffect(() => {
@@ -109,9 +105,12 @@ const Messages = ({ user }: { user: UserType }) => {
                 {messages.map((message) => (
                     <Message key={message._id} user={user} message={message} />
                 ))}
-                {awaitingMessages.map((message) => (
+                {/* {awaitingMessages.map((message) => (
                     <AwaitingMessage key={message.id} message={message} />
-                ))}
+                ))} */}
+                {awaitingMessage && (
+                    <AwaitingMessage message={awaitingMessage} />
+                )}
             </div>
         </main>
     );

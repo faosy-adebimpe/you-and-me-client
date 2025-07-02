@@ -128,6 +128,8 @@ export type MessageStoreType = {
     awaitingMessages: MessageType[];
     setAwaitingMessages: (message: MessageType) => void;
     removeAwaitingMessage: (id: string) => void;
+    //
+    awaitingMessage: MessageType | null;
 
     // sending messages
     message: string;
