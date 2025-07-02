@@ -7,12 +7,12 @@ import { MessageType, UserType } from '@/types';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import Message from './Message';
 import AwaitingMessage from './AwaitingMessage';
-import { nanoid } from 'nanoid';
 
 const Messages = ({ user }: { user: UserType }) => {
     // store
     const { socket } = useUserStore();
-    const { messages, awaitingMessages } = useMessageStore();
+    const { messages, awaitingMessages, removeAwaitingMessage } =
+        useMessageStore();
     const setMessages = useMessageStore((state) => state.setMessages);
     const addNewMessage = useMessageStore((state) => state.addNewMessage);
     const readMessages = useMessageStore((state) => state.readMessages);
@@ -44,10 +44,13 @@ const Messages = ({ user }: { user: UserType }) => {
     useEffect(() => {
         // handlers
         const handleNewMessage = (newMessage: MessageType) => {
-            // setMessages((prev) => [...prev, newMessage]);
             addNewMessage(newMessage);
 
-            // read messages
+            // // Remove the awaiting message if it matches (by temp id or clientId)
+            // if (newMessage._id) {
+            //     removeAwaitingMessage(newMessage.id);
+            // }
+
             readMessages(user._id);
         };
 
@@ -62,7 +65,14 @@ const Messages = ({ user }: { user: UserType }) => {
         return () => {
             socket.off('new-message', handleNewMessage);
         };
-    }, [addNewMessage, getMessages, socket, readMessages, user._id]);
+    }, [
+        addNewMessage,
+        getMessages,
+        socket,
+        readMessages,
+        user._id,
+        removeAwaitingMessage,
+    ]);
 
     useEffect(() => {
         const container = messageContainer.current;
@@ -103,13 +113,12 @@ const Messages = ({ user }: { user: UserType }) => {
             <div
                 // className='flex gap-[31px] flex-col h-full w-full overflow-auto'
                 className='flex gap-[20px] flex-col h-full w-full overflow-auto'
-                // ref={messageContainer}
             >
                 {messages.map((message) => (
-                    <Message key={nanoid()} user={user} message={message} />
+                    <Message key={message._id} user={user} message={message} />
                 ))}
                 {awaitingMessages.map((message) => (
-                    <AwaitingMessage key={nanoid()} message={message} />
+                    <AwaitingMessage key={message.id} message={message} />
                 ))}
             </div>
         </main>
