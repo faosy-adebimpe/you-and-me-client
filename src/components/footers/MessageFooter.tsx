@@ -24,18 +24,18 @@ const MessageFooter = ({ user }: { user: UserType }) => {
                 text: message,
             };
             setAwaitingMessages(newMessage);
-            // await new Promise((resolve) => setTimeout(resolve, 5000));
+            await new Promise((resolve) => setTimeout(resolve, 5000));
             const response = await messageApi.post(
                 `/send/${user._id}`,
                 newMessage
             );
             const { data } = response;
 
-            // add message
-            addNewMessage(data);
-
             // remove placeholder
             removeAwaitingMessage(newMessage.id);
+
+            // add message
+            addNewMessage(data);
         } catch (error) {
             console.log({ error });
         } finally {

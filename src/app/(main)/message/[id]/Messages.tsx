@@ -104,11 +104,11 @@ const Messages = ({ user }: { user: UserType }) => {
                 className='flex gap-[20px] flex-col h-full w-full overflow-auto'
                 // ref={messageContainer}
             >
-                {messages.map((message) => (
-                    <Message key={message.id} user={user} message={message} />
+                {messages.map((message, index) => (
+                    <Message key={index} user={user} message={message} />
                 ))}
-                {awaitingMessages.map((message) => (
-                    <AwaitingMessage key={message.id} message={message} />
+                {awaitingMessages.map((message, index) => (
+                    <AwaitingMessage key={index} message={message} />
                 ))}
             </div>
         </main>
