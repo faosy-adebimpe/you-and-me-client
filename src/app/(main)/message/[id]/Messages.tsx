@@ -7,6 +7,7 @@ import { MessageType, UserType } from '@/types';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import Message from './Message';
 import AwaitingMessage from './AwaitingMessage';
+import { nanoid } from 'nanoid';
 
 const Messages = ({ user }: { user: UserType }) => {
     // store
@@ -104,11 +105,11 @@ const Messages = ({ user }: { user: UserType }) => {
                 className='flex gap-[20px] flex-col h-full w-full overflow-auto'
                 // ref={messageContainer}
             >
-                {messages.map((message, index) => (
-                    <Message key={index} user={user} message={message} />
+                {messages.map((message) => (
+                    <Message key={nanoid()} user={user} message={message} />
                 ))}
-                {awaitingMessages.map((message, index) => (
-                    <AwaitingMessage key={index} message={message} />
+                {awaitingMessages.map((message) => (
+                    <AwaitingMessage key={nanoid()} message={message} />
                 ))}
             </div>
         </main>
