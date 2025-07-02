@@ -4,9 +4,11 @@ import { UserType } from '@/types';
 import { CameraIcon, PaperAirplaneIcon } from '@heroicons/react/24/outline';
 import { useMessageStore } from '@/store/messageStore';
 import TextAreaAutosize from 'react-textarea-autosize';
+import { nanoid } from 'nanoid';
 
 const MessageFooter = ({ user }: { user: UserType }) => {
-    const { addNewMessage } = useMessageStore();
+    const { addNewMessage, setAwaitingMessages, removeAwaitingMessage } =
+        useMessageStore();
     const [message, setMessage] = useState('');
     const [sending, setSending] = useState(false);
 
@@ -17,13 +19,23 @@ const MessageFooter = ({ user }: { user: UserType }) => {
         setMessage('');
         setSending(true);
         try {
-            const response = await messageApi.post(`/send/${user._id}`, {
+            const newMessage = {
+                id: nanoid(),
                 text: message,
-            });
+            };
+            setAwaitingMessages(newMessage);
+            // await new Promise((resolve) => setTimeout(resolve, 5000));
+            const response = await messageApi.post(
+                `/send/${user._id}`,
+                newMessage
+            );
             const { data } = response;
 
             // add message
             addNewMessage(data);
+
+            // remove placeholder
+            removeAwaitingMessage(newMessage.id);
         } catch (error) {
             console.log({ error });
         } finally {

@@ -110,6 +110,11 @@ export type MessageStoreType = {
     toggleOnlineUsers: () => void;
 
     // unread messages
+    allMessages: MessageType[];
+    gettingAllMessages: boolean;
+    getAllMessages: () => void;
+
+    // unread messages
     unreadMessages: MessageType[];
     gettingUnreadMessages: boolean;
     getUnreadMessages: () => void;
@@ -118,14 +123,23 @@ export type MessageStoreType = {
     readMessagesData: MessageType[];
     readingMessages: boolean;
     readMessages: (senderId: string) => void;
+
+    // awaiting messages
+    awaitingMessages: MessageType[];
+    setAwaitingMessages: (message: MessageType) => void;
+    removeAwaitingMessage: (id: string) => void;
 };
 
 export type MessageType = {
-    _id: string;
-    senderId: string;
-    receiverId: string;
+    _id?: string;
+    id?: string;
+    senderId?: string;
+    receiverId?: string;
     text?: string;
     image?: string;
+    sent?: boolean;
+    received?: boolean;
+    read?: boolean;
     createdAt?: string;
     updatedAt?: string;
 };

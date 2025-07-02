@@ -1,6 +1,6 @@
 'use client';
 
-import Message from './Message';
+import Messages from './Messages';
 import MessageNavbar from '@/components/navs/MessageNavbar';
 import MessageFooter from '@/components/footers/MessageFooter';
 import { useMessageStore } from '@/store/messageStore';
@@ -33,7 +33,7 @@ const MessagePageWrapper = ({ id }: { id: string }) => {
         <div className='flex flex-col min-h-[100dvh] max-h-[100dvh] w-screen bg-[#1C1B1B] text-white'>
             <MessageNavbar user={user} />
             {/* <main className='p-3 overflow-auto flex-1'> */}
-            <Message user={user} />
+            <Messages user={user} />
             {/* </main> */}
             <MessageFooter user={user} />
         </div>

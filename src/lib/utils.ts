@@ -17,3 +17,7 @@ export const filterMessages = (messages: MessageType[], id: string) => {
     const userMessages = messages.filter((message) => message.senderId === id);
     return userMessages;
 };
+
+// resolve reject - request - response - res
+export const sleep = (time: number = 1000) =>
+    new Promise((resolve) => setTimeout(resolve, time));

@@ -80,6 +80,22 @@ export const useMessageStore = create<MessageStoreType>((set, get) => ({
         const { onlineUsers } = get();
         set({ onlineUsers: !onlineUsers });
     },
+
+    allMessages: [],
+    gettingAllMessages: false,
+    getAllMessages: async () => {
+        set({ gettingAllMessages: true });
+        try {
+            const response = await messageApi.get('/get-all/messages');
+            const { data } = response;
+            set({ allMessages: data });
+        } catch (error: unknown) {
+            console.log({ error });
+        } finally {
+            set({ gettingAllMessages: false });
+        }
+    },
+
     unreadMessages: [],
     gettingUnreadMessages: false,
     getUnreadMessages: async () => {
@@ -115,5 +131,22 @@ export const useMessageStore = create<MessageStoreType>((set, get) => ({
         } finally {
             set({ readingMessages: false });
         }
+    },
+
+    awaitingMessages: [],
+    setAwaitingMessages: (message) => {
+        const { awaitingMessages } = get();
+        const newAwaitingMessages = [...awaitingMessages, message];
+
+        set({ awaitingMessages: newAwaitingMessages });
+    },
+
+    removeAwaitingMessage: (id) => {
+        const { awaitingMessages } = get();
+        const newAwaitingMessages = awaitingMessages.filter(
+            (message) => message.id !== id
+        );
+
+        set({ awaitingMessages: newAwaitingMessages });
     },
 }));
