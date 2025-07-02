@@ -47,9 +47,9 @@ const Messages = ({ user }: { user: UserType }) => {
             addNewMessage(newMessage);
 
             // // Remove the awaiting message if it matches (by temp id or clientId)
-            // if (newMessage._id) {
-            //     removeAwaitingMessage(newMessage.id);
-            // }
+            if (newMessage.id) {
+                removeAwaitingMessage(newMessage.id);
+            }
 
             readMessages(user._id);
         };

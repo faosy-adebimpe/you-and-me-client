@@ -24,7 +24,7 @@ const MessageFooter = ({ user }: { user: UserType }) => {
                 text: message,
             };
             setAwaitingMessages(newMessage);
-            // await new Promise((resolve) => setTimeout(resolve, 5000));
+            await new Promise((resolve) => setTimeout(resolve, 5000));
             const response = await messageApi.post(
                 `/send/${user._id}`,
                 newMessage
