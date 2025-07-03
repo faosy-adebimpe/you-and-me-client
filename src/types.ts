@@ -142,10 +142,10 @@ export type MessageStoreType = {
     awaitingMessage: MessageType | null;
 
     // sending messages
-    message: string;
-    setMessage: (value: string) => void;
+    // message: string;
+    // setMessage: (value: string) => void;
     sendingMessage: boolean;
-    sendMessage: (user: UserType) => void;
+    sendMessage: (user: UserType, message: string) => void;
 };
 
 export type MessageType = {

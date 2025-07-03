@@ -14,7 +14,6 @@ const User = ({ user }: { user: UserType }) => {
     const { unreadMessages } = useMessageStore();
     const { onlineUsers } = useUserStore();
     const messages = filterMessages(unreadMessages, user._id);
-    // const messages = unreadMessages.filter(message => message.senderId === user._id);
     const messageCount = messages.length;
 
     // check if it will not modiry the original message;
@@ -38,10 +37,6 @@ const User = ({ user }: { user: UserType }) => {
                     />
                 </div>
                 <div
-                    // className={classNames(
-                    //     'size-[14px] rounded-full border-2 border-[#1C1B1B] absolute right-0 bottom-0',
-                    //     { ' bg-[#0FDB66]': online, ' bg-[#636363]': !online }
-                    // )}
                     className={classNames(
                         'size-[14px] rounded-full border-2 border-[#1C1B1B] absolute right-0 bottom-0',
                         {
@@ -51,7 +46,6 @@ const User = ({ user }: { user: UserType }) => {
                     )}
                 ></div>
             </div>
-            {/* <div className='flex-1/2 bg-red-200'> */}
             <div className='flex-1/2 w-1/2'>
                 <p className='text-[#FFFFFF]'>{user.username}</p>
                 <p className='text-[#CCCCCC]/50 text-sm truncate w-2/3'>
@@ -60,23 +54,11 @@ const User = ({ user }: { user: UserType }) => {
             </div>
             {messageCount >= 1 && (
                 <div className='size-6 bg-red-500 rounded-full flex justify-center items-center'>
-                    {/* <p className='text-[#CCCCCC] text-sm'> */}
-                    <p
-                        // className={classNames('text-white', {
-                        //     'text-xs': messageCount >= 100,
-                        //     'text-[10px]': messageCount <= 0,
-                        // })}
-                        className='text-white text-[11px]'
-                    >
+                    <p className='text-white text-[11px]'>
                         {messageCount >= 100 ? '99+' : messageCount}
                     </p>
                 </div>
             )}
-            {/* <div className=''>
-                                        <p className='text-[#CCCCCC] text-sm'>
-                                            12:00
-                                        </p>
-                                    </div> */}
         </Link>
     );
 };

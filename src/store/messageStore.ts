@@ -155,23 +155,14 @@ export const useMessageStore = create<MessageStoreType>((set, get) => ({
     awaitingMessage: null,
 
     //
-    message: '',
-    setMessage: (value) => {
-        set({ message: value });
-    },
     sendingMessage: false,
-    sendMessage: async (user) => {
-        const {
-            message,
-            addNewMessage,
-            setAwaitingMessages,
-            removeAwaitingMessage,
-        } = get();
+    sendMessage: async (user, message) => {
+        const { addNewMessage, setAwaitingMessages, removeAwaitingMessage } =
+            get();
         if (!message) {
             return;
         }
         set({ sendingMessage: true });
-        set({ message: '' });
         try {
             const newMessage = {
                 id: nanoid(),

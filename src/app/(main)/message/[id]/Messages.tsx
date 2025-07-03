@@ -22,11 +22,13 @@ const Messages = ({ user }: { user: UserType }) => {
 
     const [loading, setLoading] = useState(false);
 
+    // splitting messages
+
     const getMessagesFunction = async () => {
         setLoading(true);
         try {
             const response = await messageApi.get(`/${user._id}`);
-            const { data } = response;
+            const { data }: { data: MessageType[] } = response;
             initialScroll.current = true; // <--- Ensure instant scroll on first load
             setMessages(data);
         } catch (error) {
