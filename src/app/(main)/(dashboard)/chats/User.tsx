@@ -11,13 +11,20 @@ import Link from 'next/link';
 import React from 'react';
 
 const User = ({ user }: { user: UserType }) => {
-    const { unreadMessages } = useMessageStore();
+    const { unreadMessages, allMessages } = useMessageStore();
     const { onlineUsers } = useUserStore();
+
+    // unread messages
     const messages = filterMessages(unreadMessages, user._id);
     const messageCount = messages.length;
 
+    // all messages
+    const allUsermessages = filterMessages(allMessages, user._id);
+    const allMessagesCount = allUsermessages.length;
+    const latestMessage = allUsermessages[allMessagesCount - 1];
+
     // check if it will not modiry the original message;
-    const latestMessage = messages[messageCount - 1];
+    // const latestMessage = messages[messageCount - 1];
     const online = onlineUsers.includes(user._id);
     return (
         <Link
@@ -49,7 +56,9 @@ const User = ({ user }: { user: UserType }) => {
             <div className='flex-1/2 w-1/2'>
                 <p className='text-[#FFFFFF]'>{user.username}</p>
                 <p className='text-[#CCCCCC]/50 text-sm truncate w-2/3'>
-                    {latestMessage?.text}
+                    {latestMessage
+                        ? latestMessage.text
+                        : 'Send a message to start chatting'}
                 </p>
             </div>
             {messageCount >= 1 && (

@@ -12,6 +12,7 @@ export const useMessageStore = create<MessageStoreType>((set, get) => ({
         const { messages } = get();
         set({ messages: [...messages, newMessage] });
     },
+
     // users
     gettingUsers: false,
     users: [],

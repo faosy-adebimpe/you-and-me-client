@@ -96,8 +96,11 @@ const Messages = ({ user }: { user: UserType }) => {
     if (messages.length === 0) {
         return (
             <div className='w-full h-[100vh] flex justify-center items-center'>
-                <p className='text-sm opacity-30'>
+                {/* <p className='text-sm opacity-30'>
                     Start chat with {user.username}
+                </p> */}
+                <p className='text-sm opacity-30'>
+                    Start a conversation with {user.username}
                 </p>
             </div>
         );
