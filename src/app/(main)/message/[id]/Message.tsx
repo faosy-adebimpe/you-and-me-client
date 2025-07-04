@@ -54,9 +54,35 @@ const Message = ({
                         }}
                     />
                 )}
-                <p className='time text-[12px] mt-[8px] text-[#CCCCCC]'>
-                    {message.createdAt && format(message.createdAt)}
-                </p>
+                <div className='flex gap-5 justify-between items-end mt-[8px]'>
+                    <p className='time text-[12px] text-[#CCCCCC]'>
+                        {message.createdAt && format(message.createdAt)}
+                    </p>
+                    {message.senderId === authUser?._id && (
+                        <div className='flex gap-1 items-center'>
+                            {message.sent && (
+                                <div
+                                    className={classNames('w-[2px] h-2.5', {
+                                        'w-[2px] h-2.5 bg-gray-500':
+                                            !message.read,
+                                        'w-[2px] h-2.5 bg-(--theme-color)':
+                                            message.read,
+                                    })}
+                                ></div>
+                            )}
+                            {message.received && (
+                                <div
+                                    className={classNames('w-[2px] h-2.5', {
+                                        'w-[2px] h-2.5 bg-gray-500':
+                                            !message.read,
+                                        'w-[2px] h-2.5 bg-(--theme-color)':
+                                            message.read,
+                                    })}
+                                ></div>
+                            )}
+                        </div>
+                    )}
+                </div>
             </div>
         </div>
     );

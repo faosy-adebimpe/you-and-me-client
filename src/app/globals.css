@@ -54,6 +54,10 @@
     .reset {
         @apply size-3;
     }
+
+    /* .message-notification {
+        @apply w-[2px] h-2.5 bg-gray-500;
+    } */
 }
 
 @utility container {
