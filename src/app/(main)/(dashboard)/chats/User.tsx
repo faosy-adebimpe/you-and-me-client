@@ -19,7 +19,10 @@ const User = ({ user }: { user: UserType }) => {
     const messageCount = messages.length;
 
     // all messages
-    const allUsermessages = filterMessages(allMessages, user._id);
+    const allUsermessages = allMessages.filter(
+        (message) =>
+            message.senderId === user._id || message.receiverId === user._id
+    );
     const allMessagesCount = allUsermessages.length;
     const latestMessage = allUsermessages[allMessagesCount - 1];
 

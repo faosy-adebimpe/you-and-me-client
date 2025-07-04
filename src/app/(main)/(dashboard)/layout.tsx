@@ -17,11 +17,12 @@ const DefaultLayout = ({
     children,
 }: Readonly<{ children: React.ReactNode }>) => {
     const { socket } = useUserStore();
-    const { getUnreadMessages } = useMessageStore();
+    const { getUnreadMessages, getAllMessages } = useMessageStore();
     useEffect(() => {
         // handlers
         const handleNewMessage = () => {
             getUnreadMessages();
+            getAllMessages();
         };
 
         // events
@@ -31,7 +32,7 @@ const DefaultLayout = ({
         return () => {
             socket.off('new-message', handleNewMessage);
         };
-    }, [socket, getUnreadMessages]);
+    }, [socket, getUnreadMessages, getAllMessages]);
     return (
         // <div className='w-screen h-screen bg-[#1C1B1B] text-[#FFFFFF] grid grid-rows-[1fr_8fr_1fr] overflow-hidden'>
         <div className='w-screen h-[100dvh] bg-[#1C1B1B] text-[#FFFFFF] grid grid-rows-[1fr_8fr_1fr] overflow-hidden'>

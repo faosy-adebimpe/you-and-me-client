@@ -158,8 +158,12 @@ export const useMessageStore = create<MessageStoreType>((set, get) => ({
     //
     sendingMessage: false,
     sendMessage: async (user, message) => {
-        const { addNewMessage, setAwaitingMessages, removeAwaitingMessage } =
-            get();
+        const {
+            addNewMessage,
+            setAwaitingMessages,
+            removeAwaitingMessage,
+            getAllMessages,
+        } = get();
         if (!message) {
             return;
         }
@@ -178,6 +182,7 @@ export const useMessageStore = create<MessageStoreType>((set, get) => ({
 
             // add message
             addNewMessage(data);
+            getAllMessages();
 
             // remove placeholder
             removeAwaitingMessage(newMessage.id);
