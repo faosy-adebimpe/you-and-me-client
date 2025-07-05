@@ -16,6 +16,7 @@ const Messages = ({ user }: { user: UserType }) => {
     const setMessages = useMessageStore((state) => state.setMessages);
     const addNewMessage = useMessageStore((state) => state.addNewMessage);
     const readMessages = useMessageStore((state) => state.readMessages);
+    const getAllMessages = useMessageStore((state) => state.getAllMessages);
 
     const messageContainer = useRef<HTMLDivElement>(null);
     const initialScroll = useRef(true);
@@ -53,6 +54,8 @@ const Messages = ({ user }: { user: UserType }) => {
             addNewMessage(newMessage);
             readMessages(user._id);
             // socket.emit('message-received', true);
+            // get all messages
+            getAllMessages();
         };
 
         const messageRead = () => {
@@ -72,7 +75,14 @@ const Messages = ({ user }: { user: UserType }) => {
             socket.off('new-message', handleNewMessage);
             socket.off('update-message-status', messageRead);
         };
-    }, [addNewMessage, getMessages, socket, readMessages, user._id]);
+    }, [
+        addNewMessage,
+        getMessages,
+        socket,
+        readMessages,
+        user._id,
+        getAllMessages,
+    ]);
 
     useEffect(() => {
         const container = messageContainer.current;
