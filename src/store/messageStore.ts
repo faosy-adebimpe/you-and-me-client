@@ -1,7 +1,8 @@
 import { messageApi } from '@/lib/api';
-import { MessageStoreType } from '@/types';
+import { MessageStoreType, MessageType } from '@/types';
 import { nanoid } from 'nanoid';
 import { create } from 'zustand';
+import { useUserStore } from './userStore';
 
 export const useMessageStore = create<MessageStoreType>((set, get) => ({
     messages: [],
@@ -11,6 +12,21 @@ export const useMessageStore = create<MessageStoreType>((set, get) => ({
     addNewMessage: (newMessage) => {
         const { messages } = get();
         set({ messages: [...messages, newMessage] });
+    },
+
+    gettingUserMessages: false,
+    getUserMessages: async (user) => {
+        set({ gettingUserMessages: true });
+        try {
+            const response = await messageApi.get(`/${user._id}`);
+            const { data }: { data: MessageType[] } = response;
+            // initialScroll.current = true; // <--- Ensure instant scroll on first load
+            set({ messages: data });
+        } catch (error) {
+            console.log({ error });
+        } finally {
+            set({ gettingUserMessages: false });
+        }
     },
 
     // users
@@ -86,11 +102,15 @@ export const useMessageStore = create<MessageStoreType>((set, get) => ({
     allMessages: [],
     gettingAllMessages: false,
     getAllMessages: async () => {
+        const { socket } = useUserStore.getState();
         set({ gettingAllMessages: true });
         try {
             const response = await messageApi.get('/get-all/messages');
             const { data } = response;
             set({ allMessages: data });
+
+            // emit message
+            socket.emit('update-message-status', { received: true });
         } catch (error: unknown) {
             console.log({ error });
         } finally {
@@ -116,6 +136,7 @@ export const useMessageStore = create<MessageStoreType>((set, get) => ({
     readMessagesData: [],
     readingMessages: false,
     readMessages: async (senderId) => {
+        const { socket } = useUserStore.getState();
         set({ readingMessages: true });
         try {
             const response = await messageApi.patch(`/read/${senderId}`);
@@ -128,6 +149,7 @@ export const useMessageStore = create<MessageStoreType>((set, get) => ({
                 (message) => message.senderId !== senderId
             );
             set({ unreadMessages: newUnreadMessages });
+            socket.emit('update-message-status', { read: true });
         } catch (error: unknown) {
             console.log({ error });
         } finally {

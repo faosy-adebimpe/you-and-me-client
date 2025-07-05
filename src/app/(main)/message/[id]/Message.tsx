@@ -60,26 +60,103 @@ const Message = ({
                     </p>
                     {message.senderId === authUser?._id && (
                         <div className='flex gap-1 items-center'>
-                            {message.sent && (
-                                <div
-                                    className={classNames('w-[2px] h-2.5', {
-                                        'w-[2px] h-2.5 bg-gray-500':
-                                            !message.read,
-                                        'w-[2px] h-2.5 bg-(--theme-color)':
-                                            message.read,
-                                    })}
-                                ></div>
+                            {/* Sent: single gray check */}
+                            {message.sent && !message.received && (
+                                <svg
+                                    width='18'
+                                    height='18'
+                                    viewBox='0 0 18 18'
+                                    className='text-gray-400'
+                                    fill='none'
+                                    xmlns='http://www.w3.org/2000/svg'
+                                >
+                                    <path
+                                        d='M5 9.5L8 12.5L13 7.5'
+                                        stroke='currentColor'
+                                        strokeWidth='2'
+                                        strokeLinecap='round'
+                                        strokeLinejoin='round'
+                                    />
+                                </svg>
                             )}
-                            {message.received && (
-                                <div
-                                    className={classNames('w-[2px] h-2.5', {
-                                        'w-[2px] h-2.5 bg-gray-500':
-                                            !message.read,
-                                        'w-[2px] h-2.5 bg-(--theme-color)':
-                                            message.read,
-                                    })}
-                                ></div>
-                            )}
+                            {/* Delivered: double gray checks */}
+                            {message.sent &&
+                                message.received &&
+                                !message.read && (
+                                    <span className='flex'>
+                                        <svg
+                                            width='18'
+                                            height='18'
+                                            viewBox='0 0 18 18'
+                                            className='text-gray-400 -mr-2'
+                                            fill='none'
+                                            xmlns='http://www.w3.org/2000/svg'
+                                        >
+                                            <path
+                                                d='M5 9.5L8 12.5L13 7.5'
+                                                stroke='currentColor'
+                                                strokeWidth='2'
+                                                strokeLinecap='round'
+                                                strokeLinejoin='round'
+                                            />
+                                        </svg>
+                                        <svg
+                                            width='18'
+                                            height='18'
+                                            viewBox='0 0 18 18'
+                                            className='text-gray-400'
+                                            fill='none'
+                                            xmlns='http://www.w3.org/2000/svg'
+                                        >
+                                            <path
+                                                d='M5 9.5L8 12.5L13 7.5'
+                                                stroke='currentColor'
+                                                strokeWidth='2'
+                                                strokeLinecap='round'
+                                                strokeLinejoin='round'
+                                            />
+                                        </svg>
+                                    </span>
+                                )}
+                            {/* Read: double blue checks */}
+                            {message.sent &&
+                                message.received &&
+                                message.read && (
+                                    <span className='flex'>
+                                        <svg
+                                            width='18'
+                                            height='18'
+                                            viewBox='0 0 18 18'
+                                            className='text-blue-500 -mr-2'
+                                            fill='none'
+                                            xmlns='http://www.w3.org/2000/svg'
+                                        >
+                                            <path
+                                                d='M5 9.5L8 12.5L13 7.5'
+                                                stroke='currentColor'
+                                                strokeWidth='2'
+                                                strokeLinecap='round'
+                                                strokeLinejoin='round'
+                                            />
+                                        </svg>
+                                        <svg
+                                            width='18'
+                                            height='18'
+                                            viewBox='0 0 18 18'
+                                            className='text-blue-500'
+                                            fill='none'
+                                            xmlns='http://www.w3.org/2000/svg'
+                                        >
+                                            <path
+                                                d='M5 9.5L8 12.5L13 7.5'
+                                                stroke='currentColor'
+                                                strokeWidth='2'
+                                                strokeLinecap='round'
+                                                strokeLinejoin='round'
+                                            />
+                                        </svg>
+                                    </span>
+                                )}
                         </div>
                     )}
                 </div>

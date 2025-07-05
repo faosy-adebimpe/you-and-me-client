@@ -24,8 +24,10 @@ const Messages = ({ user }: { user: UserType }) => {
 
     // splitting messages
 
-    const getMessagesFunction = async () => {
-        setLoading(true);
+    const getMessagesFunction = async (load: boolean = true) => {
+        if (load) {
+            setLoading(true);
+        }
         try {
             const response = await messageApi.get(`/${user._id}`);
             const { data }: { data: MessageType[] } = response;
@@ -34,7 +36,9 @@ const Messages = ({ user }: { user: UserType }) => {
         } catch (error) {
             console.log({ error });
         } finally {
-            setLoading(false);
+            if (load) {
+                setLoading(false);
+            }
         }
     };
 
@@ -48,10 +52,16 @@ const Messages = ({ user }: { user: UserType }) => {
         const handleNewMessage = (newMessage: MessageType) => {
             addNewMessage(newMessage);
             readMessages(user._id);
+            // socket.emit('message-received', true);
+        };
+
+        const messageRead = () => {
+            getMessages(false);
         };
 
         // events
         socket.on('new-message', handleNewMessage);
+        socket.on('update-message-status', messageRead);
 
         // get initials messages
         // get messages
@@ -60,6 +70,7 @@ const Messages = ({ user }: { user: UserType }) => {
         // clean up the useEffect
         return () => {
             socket.off('new-message', handleNewMessage);
+            socket.off('update-message-status', messageRead);
         };
     }, [addNewMessage, getMessages, socket, readMessages, user._id]);
 

@@ -83,13 +83,18 @@ export type UserStoreType = {
 export type OnlineUsersType = string[];
 
 // socket
+export type MessageStatus = {
+    [key: string]: boolean;
+};
 export type ServerToClientProps = {
     message: (data: string) => void;
     'new-message': (data: MessageType) => void;
     'get-online-users': (onlineUers: OnlineUsersType) => void;
+    'update-message-status': (data: MessageStatus) => void;
 };
 export type ClientToServerProps = {
     seen: (data: string) => void;
+    'update-message-status': (data: MessageStatus) => void;
 };
 
 // message types
@@ -98,6 +103,8 @@ export type MessageStoreType = {
     messages: MessageType[];
     setMessages: (newMessages: MessageType[]) => void;
     addNewMessage: (newMessage: MessageType) => void;
+    gettingUserMessages: boolean;
+    getUserMessages: (user: UserType) => void;
     // addMessage: (newMessage: MessageType) => void;
     // users
     gettingUsers: boolean;
