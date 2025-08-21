@@ -40,6 +40,14 @@ const RegistratonForm = () => {
 
     const onSubmit = async (formValues: UserRegistrationType) => {
         try {
+            // check if passwords match
+            const { password, confirmPassword } = formValues;
+            const passwordsMatch = password === confirmPassword;
+            if (!passwordsMatch) {
+                toast.error('Passwords does not match');
+                return;
+            }
+
             const response = await authApi.post('/register', formValues);
             const { data } = response;
             setAuthUser(data);
@@ -64,11 +72,11 @@ const RegistratonForm = () => {
         }
     };
     return (
-        <div className='w-full flex justify-center'>
+        <div className="w-full flex justify-center">
             {isSubmitting && <AuthLoader />}
             <form
                 onSubmit={handleSubmit(onSubmit)}
-                className='flex gap-4 flex-col items-center'
+                className="flex gap-4 flex-col items-center"
             >
                 {userInputs.map((userInput) => (
                     <Input
@@ -80,9 +88,9 @@ const RegistratonForm = () => {
                     />
                 ))}
 
-                <button className='w-[300px] sm:w-[360] rounded-[8px] p-5 bg-[#2F3538] text-[#FFFFFF] flex gap-[14px] justify-center items-center'>
-                    <span className='text-[12.8px]'>CREATE ACCOUNT</span>
-                    <ChevronRightIcon className='size-5' />
+                <button className="w-[300px] sm:w-[360] rounded-[8px] p-5 bg-[#2F3538] text-[#FFFFFF] flex gap-[14px] justify-center items-center">
+                    <span className="text-[12.8px]">CREATE ACCOUNT</span>
+                    <ChevronRightIcon className="size-5" />
                 </button>
             </form>
         </div>

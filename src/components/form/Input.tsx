@@ -56,7 +56,7 @@ const Input = ({
                 <label htmlFor={name}>{label}</label>
                 {fieldValue && isPasswordArea && (
                     <button
-                        className="absolute right-0 bg-gray-200 size-7 flex justify-center items-center rounded-full"
+                        className="absolute right-0 bg-gray-200 size-7 flex justify-center items-center rounded-full transition hover:bg-gray-300/70"
                         onClick={changeType}
                     >
                         {isPassword ? (
