@@ -19,7 +19,7 @@ const DefaultLayout = ({
     const { socket } = useUserStore();
     const { getUnreadMessages, getAllMessages } = useMessageStore();
     useEffect(() => {
-        // handlers
+        // handlersqas
         const handleNewMessage = () => {
             getUnreadMessages();
             getAllMessages();
